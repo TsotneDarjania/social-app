@@ -1,5 +1,6 @@
 import http from "http";
 import fs from "fs";
+import { PORT } from "./config";
 
 const server = http.createServer((req, res) => {
   const url = req.url;
@@ -7,7 +8,8 @@ const server = http.createServer((req, res) => {
   const filePath = () => {
     if (url === "/") {
       return "public/index.html";
-    } else if (url === "javascript/script.js") {
+    } else if (url === "/javascript/script.js") {
+      console.log("script.js");
       return "public/javascript/script.js";
     } else if (url === "/style/style.css") {
       return "public/style/style.css";
@@ -28,7 +30,7 @@ const server = http.createServer((req, res) => {
 });
 
 export const startServer = () => {
-  server.listen(3000, () => {
-    console.log("Server started on port 3000");
+  server.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
   });
 };

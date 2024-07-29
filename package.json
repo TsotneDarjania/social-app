@@ -6,9 +6,15 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "dev": "nodemon --exec esno app.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "esno": "^4.7.0",
+    "nodemon": "^3.1.4",
+    "typescript": "^5.5.4"
+  }
 }
