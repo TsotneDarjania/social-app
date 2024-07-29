@@ -2,6 +2,8 @@ import http from "http";
 import fs from "fs";
 import { PORT } from "./config";
 
+console.log("working");
+
 const server = http.createServer((req, res) => {
   const url = req.url;
 
