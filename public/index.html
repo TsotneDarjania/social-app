@@ -8,7 +8,48 @@
   </head>
 
   <body>
-    <h1>HomePage</h1>
+    <div class="main">
+      <div class="login-form">
+        <form action="/login" method="POST" class="form">
+          <input type="text" name="username" placeholder="Username" required />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+
+          <button type="submit" class="LoginBtn">Login</button>
+          <div class="forgotBtn">Forgotten password?</div>
+          <div class="separator"></div>
+          <button type="button" class="createBtn" onclick="showSignUpForm()">
+            Create Account
+          </button>
+        </form>
+      </div>
+
+      <div class="form-container sign-up-form" style="display: none">
+        <h2>Sign Up</h2>
+        <form action="/sign-up" method="POST" class="form">
+          <input type="text" name="username" placeholder="Username" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+
+          <input type="email" name="email" placeholder="Email" required />
+          <button type="submit" class="SignUpBtn">Sign Up</button>
+          <div class="separator"></div>
+          <button type="button" class="loginBtn" onclick="showLoginForm()">
+            Back to Login
+          </button>
+        </form>
+      </div>
+    </div>
+
     <script src="./javascript/script.js"></script>
   </body>
 </html>
