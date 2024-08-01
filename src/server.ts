@@ -1,30 +1,15 @@
 import express from "express";
-import { PORT } from "./config";
+import apiRoutes from "./routes/apiRoutes";
+import Config from "./config";
 
-const app = express();
+const app = Config.expressApp;
+
+// Create Static Server
 app.use(express.static("public"));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.post("/login", (req, res) => {
-  const data = req.body;
-
-  // console.log("data", data);
-
-  res.json(data);
-});
-
-app.post("/sign-up", (req, res) => {
-  const data = req.body;
-
-  // console.log("data", data);
-
-  res.json(data);
-});
+app.use(apiRoutes);
 
 export const startServer = () => {
-  app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+  app.listen(Config.PORT, () => {
+    console.log(`Server started on port ${Config.PORT}`);
   });
 };
