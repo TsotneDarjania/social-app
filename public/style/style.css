@@ -1,1 +1,115 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 50vh;
+}
+
+.form input {
+  padding: 20px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* login form */
+.LoginBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.LoginBtn:hover {
+  background-color: #0056b3;
+}
+
+.createBtn {
+  align-self: center;
+  background-color: #4bd621;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 10px;
+  width: 60%;
+}
+
+.createBtn:hover {
+  background-color: #3fb01c;
+}
+
+.forgotBtn {
+  color: #007bff;
+  align-self: center;
+  cursor: pointer;
+}
+
+.separator {
+  background-color: #d0d0d0;
+  margin: 16px 0;
+  height: 1px;
+  width: 100%;
+}
+
+/* sign up form  */
+.sign-up-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.SignUpBtn {
+  align-self: center;
+  background-color: #4bd621;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 10px;
+  width: 60%;
+}
+
+.SignUpBtn:hover {
+  background-color: #3fb01c;
+}
+
+.closeBtn {
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 4px 10px;
+  background-color: #5a6268;
+}
+
+.closeBtn:hover {
+  background-color: #b7bbbe;
+}
