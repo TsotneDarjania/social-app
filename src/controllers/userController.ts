@@ -1,9 +1,19 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 
-export function registration(req: Request, res: Response) {
-  console.log(req.body);
+export const registration = (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
-  res.json({ username, email, password });
-  // res.status(201).end("User registered");
-}
+  const result = validationResult(req);
+  const errors = result.array().map((item) => item.msg);
+
+  if (errors.length) {
+    res.status(400).send({ errors });
+  } else {
+    res.status(201).json({ res: "User registered" });
+  }
+};
+
+export const login = (req: Request, res: Response) => {
+  res.status(200).send("This is login");
+};
