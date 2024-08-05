@@ -9,9 +9,15 @@ export const registration = (req: Request, res: Response) => {
 
   if (errors.length) {
     res.status(400).send({ errors });
-  } else {
-    res.status(201).json({ res: "User registered" });
+    return;
   }
+
+  res.cookie("username", username, {
+    httpOnly: true,
+    expires: new Date(Date.now() + 900000),
+  });
+
+  res.status(201).json({ res: "User registered" });
 };
 
 export const login = (req: Request, res: Response) => {

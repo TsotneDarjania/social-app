@@ -39,6 +39,11 @@ function registration() {
       return response.json();
     })
     .then((data) => {
+      if (data.errors) {
+        const errorMessage = data.errors[0];
+        alert(errorMessage);
+      }
+
       console.log(data);
     });
 }
