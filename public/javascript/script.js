@@ -37,9 +37,7 @@ function registration() {
       username,
     }),
   })
-    .then((response) => {
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((data) => {
       if (data.errors) {
         const errorMessage = data.errors[0];
