@@ -1,11 +1,14 @@
 import { Router } from "express";
+import { isAuthenticated } from "../controllers/userController";
 
 const pageRouter = Router();
 
 pageRouter.get("/", (req, res) => {
-  console.log("Cookies: ", req.cookies);
-  console.log(req.cookies);
   res.render("index");
+});
+
+pageRouter.get("/home", isAuthenticated, (req, res) => {
+  res.render("homePage");
 });
 
 export default pageRouter;
