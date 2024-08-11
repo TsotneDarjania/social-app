@@ -45,7 +45,8 @@ function registration() {
       }
 
       console.log(data);
-    });
+    })
+    .then(() => showLoginForm());
 }
 
 function login() {
@@ -62,11 +63,14 @@ function login() {
       password: loginPassword,
     }),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
+    .then((response) => {
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        return response.json();
       }
+    })
+    .then((data) => {
       if (data.errors) {
         const errorMessage = data.errors[0];
         alert(errorMessage);
