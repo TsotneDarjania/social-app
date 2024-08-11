@@ -4,11 +4,11 @@ import { isAuthenticated } from "../controllers/userController";
 const pageRouter = Router();
 
 pageRouter.get("/", (req, res) => {
-  res.render("index");
-});
-
-pageRouter.get("/home", isAuthenticated, (req, res) => {
-  res.render("homePage");
+  if (isAuthenticated(req)) {
+    res.render("homePage");
+  } else {
+    res.render("index");
+  }
 });
 
 export default pageRouter;

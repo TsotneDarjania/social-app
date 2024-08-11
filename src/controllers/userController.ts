@@ -52,18 +52,13 @@ export const login = async (req: Request, res: Response) => {
   const session = req.session as unknown as CustomSession;
   session.user = { email, username: user.username };
 
-  res.redirect("http://localhost:3000/home");
+  res.json("success");
 };
 
-export const isAuthenticated = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const isAuthenticated = (req: Request) => {
   const session = req.session as unknown as CustomSession;
   if (session?.user) {
-    next();
-  } else {
-    res.status(401).send("Unauthorized");
+    return true;
   }
+  return false;
 };

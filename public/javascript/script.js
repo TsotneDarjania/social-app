@@ -63,17 +63,14 @@ function login() {
       password: loginPassword,
     }),
   })
-    .then((response) => {
-      if (response.redirected) {
-        window.location.href = response.url;
-      } else {
-        return response.json();
-      }
-    })
+    .then((response) => response.json())
     .then((data) => {
       if (data.errors) {
         const errorMessage = data.errors[0];
         alert(errorMessage);
+      }
+      if (data == "success") {
+        window.location.reload();
       }
     });
 }
