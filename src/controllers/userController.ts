@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 
@@ -48,27 +48,17 @@ export const login = async (req: Request, res: Response) => {
   if (!match) {
     return res.status(401).json({ message: "Invalid password" });
   }
-  const session = req.session as unknown as CustomSession;
 
+  const session = req.session as unknown as CustomSession;
   session.user = { email, username: user.username };
 
-  // console.log("req.session", req.session);
-
-  res.status(200).json({
-    message: "Login successful",
-    redirectUrl: "http://localhost:3000/home",
-  });
+  res.json("success");
 };
 
-export const isAuthenticated = (
-  req: Request,
-  res: Response,
-  next: () => void
-) => {
+export const isAuthenticated = (req: Request) => {
   const session = req.session as unknown as CustomSession;
-  if (session && session.user) {
-    next();
-  } else {
-    res.redirect("http://localhost:3000");
+  if (session?.user) {
+    return true;
   }
+  return false;
 };

@@ -45,7 +45,8 @@ function registration() {
       }
 
       console.log(data);
-    });
+    })
+    .then(() => showLoginForm());
 }
 
 function login() {
@@ -64,12 +65,12 @@ function login() {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-      }
       if (data.errors) {
         const errorMessage = data.errors[0];
         alert(errorMessage);
+      }
+      if (data == "success") {
+        window.location.reload();
       }
     });
 }
