@@ -1,3 +1,33 @@
+window.addEventListener("DOMContentLoaded", () => {
+  init();
+});
+
+function init() {
+  if (window.userData.authenticated === "true") {
+    document.getElementById("authenticated-content").style.display = "block";
+    document.getElementById("username").innerHTML = window.userData.username;
+  } else {
+    document.getElementById("unauthenticated-content").style.display = "block";
+  }
+}
+
+function logOut() {
+  console.log("logging out");
+  fetch("http://localhost:3000/api/user/logout", {
+    method: "POST",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data === "success") {
+        window.location.reload();
+      } else {
+        alert("Failed to log out");
+      }
+    });
+}
+
 const showSignUpForm = () => {
   document.getElementById("login-form").style.display = "none";
   document.getElementById("sign-up-form").style.display = "block";
@@ -63,12 +93,21 @@ function login() {
       password: loginPassword,
     }),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 401) {
+        alert("Invalid email or password");
+        return;
+      }
+      return response.json();
+    })
     .then((data) => {
+      if (!data) return;
       if (data.errors) {
         const errorMessage = data.errors[0];
         alert(errorMessage);
       }
+      console.log(data);
+
       if (data == "success") {
         window.location.reload();
       }

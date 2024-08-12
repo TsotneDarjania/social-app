@@ -9,72 +9,86 @@
 
   <body>
     <div class="main">
-      <div id="login-form">
-        <form class="form">
-          <h2>Log in</h2>
-          <input
-            id="loginEmail"
-            type="email"
-            name="email"
-            placeholder="email"
-            required
-          />
-
-          <input
-            id="loginPassword"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-
-          <button id="LoginBtn" type="button" class="LoginBtn">Login</button>
-          <div class="forgotBtn">Forgotten password?</div>
-          <div class="separator"></div>
-          <button type="button" class="createBtn" onclick="showSignUpForm()">
-            Create Account
-          </button>
-        </form>
+      <div style="display: none" id="authenticated-content">
+        <p id="username"></p>
+        <button onclick="logOut()">Log Out</button>
       </div>
 
-      <div class="sign-up-form" id="sign-up-form" style="display: none">
-        <form class="form">
-          <div class="sign-up-header">
-            <h2>Sign Up</h2>
+      <div style="display: none" id="unauthenticated-content">
+        <div id="login-form">
+          <form class="form">
+            <h2>Log in</h2>
+            <input
+              id="loginEmail"
+              type="email"
+              name="email"
+              placeholder="email"
+              required
+            />
 
-            <button type="button" class="closeBtn" onclick="showLoginForm()">
-              X
+            <input
+              id="loginPassword"
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+
+            <button id="LoginBtn" type="button" class="LoginBtn">Login</button>
+            <div class="forgotBtn">Forgotten password?</div>
+            <div class="separator"></div>
+            <button type="button" class="createBtn" onclick="showSignUpForm()">
+              Create Account
             </button>
-          </div>
+          </form>
+        </div>
 
-          <input
-            id="reg-username"
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-          />
-          <input
-            id="reg-password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
+        <div class="sign-up-form" id="sign-up-form" style="display: none">
+          <form class="form">
+            <div class="sign-up-header">
+              <h2>Sign Up</h2>
 
-          <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-          />
-          <button type="button" id="sign-up-button" class="SignUpBtn">
-            Sign Up
-          </button>
-        </form>
+              <button type="button" class="closeBtn" onclick="showLoginForm()">
+                X
+              </button>
+            </div>
+
+            <input
+              id="reg-username"
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+            />
+            <input
+              id="reg-password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+            />
+            <button type="button" id="sign-up-button" class="SignUpBtn">
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
     </div>
+
+    <script>
+      window.userData = {
+        authenticated: "<%= authenticated %>",
+        username: "<%= username %>",
+      };
+    </script>
 
     <script src="./javascript/script.js"></script>
   </body>

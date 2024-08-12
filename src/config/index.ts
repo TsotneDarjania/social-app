@@ -3,6 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 
 dotenv.config();
 
@@ -22,6 +23,10 @@ app.use(
     secret: process.env.SESSION_SECRET_KEY!,
     resave: false,
     saveUninitialized: false,
+    store: new MongoStore({
+      mongoUrl: process.env.MONGODB_URI!,
+      collectionName: "social-app-sessions",
+    }),
     cookie: {
       secure: false,
       httpOnly: true,

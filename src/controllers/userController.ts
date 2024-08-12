@@ -4,8 +4,7 @@ import bcrypt from "bcrypt";
 
 import { Users } from "../types/usersDb";
 import { CustomSession } from "../types/session";
-
-const users: Users = {};
+import User from "../../models/user";
 
 export const registration = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -18,12 +17,14 @@ export const registration = async (req: Request, res: Response) => {
 
   const { username, email, password } = req.body;
 
-  if (users[email]) {
+  if (await User.findOne({ email })) {
     return res.status(400).json({ message: "User already exists" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  users[email] = { username, password: hashedPassword };
+
+  const user = new User({ username, email, password: hashedPassword });
+  user.save();
 
   res.status(201).json({ res: "User registered" });
 };
@@ -39,25 +40,41 @@ export const login = async (req: Request, res: Response) => {
 
   const { email, password } = req.body;
 
-  const user = users[email];
+  const user = await User.findOne({ email });
+
   if (!user) {
-    return res.status(401).json({ message: "Invalid email" });
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user!.password);
+  if (!isPasswordValid) {
+    return res.status(401).json({ message: "Invalid email or password" });
   }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    return res.status(401).json({ message: "Invalid password" });
+    return res.status(401).json({ message: "Invalid email or password" });
   }
 
   const session = req.session as unknown as CustomSession;
-  session.user = { email, username: user.username };
+  session.userId = user._id!.toString();
 
   res.json("success");
 };
 
+export function logOut(req: Request, res: Response) {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: "Internal server error" });
+    }
+    res.clearCookie("sid");
+    res.json("success");
+  });
+}
+
 export const isAuthenticated = (req: Request) => {
   const session = req.session as unknown as CustomSession;
-  if (session?.user) {
+  if (session?.userId) {
     return true;
   }
   return false;
