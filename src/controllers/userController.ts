@@ -1,8 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 
-import { Users } from "../types/usersDb";
 import { CustomSession } from "../types/session";
 import User from "../../models/user";
 
