@@ -10,8 +10,12 @@
   <body>
     <div class="main">
       <div style="display: none" id="authenticated-content">
-        <p id="username"></p>
-        <button onclick="logOut()">Log Out</button>
+        <div id="header">
+          <div id="userProfile">
+            <div id="userName"></div>
+            <button id="logoutBtn">log out</button>
+          </div>
+        </div>
       </div>
 
       <div style="display: none" id="unauthenticated-content">
@@ -37,7 +41,8 @@
             <button id="LoginBtn" type="button" class="LoginBtn">Login</button>
             <div class="forgotBtn">Forgotten password?</div>
             <div class="separator"></div>
-            <button type="button" class="createBtn" onclick="showSignUpForm()">
+
+            <button type="button" class="createBtn" id="createAccountBtn">
               Create Account
             </button>
           </form>
@@ -48,7 +53,11 @@
             <div class="sign-up-header">
               <h2>Sign Up</h2>
 
-              <button type="button" class="closeBtn" onclick="showLoginForm()">
+              <button
+                type="button"
+                class="closeBtn"
+                id="closeRegistrationFormBtn"
+              >
                 X
               </button>
             </div>
@@ -69,7 +78,7 @@
             />
 
             <input
-              id="email"
+              id="reg-email"
               type="email"
               name="email"
               placeholder="Email"
@@ -90,6 +99,6 @@
       };
     </script>
 
-    <script src="./javascript/script.js"></script>
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>
