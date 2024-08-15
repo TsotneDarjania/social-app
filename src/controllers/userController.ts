@@ -3,7 +3,7 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 
 import { CustomSession } from "../types/session";
-import User from "../../models/user";
+import User from "../models/user";
 
 export const registration = async (req: Request, res: Response) => {
   const result = validationResult(req);

@@ -18,6 +18,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Create Static Server
+app.use(express.static("public"));
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET_KEY!,
@@ -30,7 +33,7 @@ app.use(
     cookie: {
       secure: false,
       httpOnly: true,
-      maxAge: 900000,
+      maxAge: 86400000,
       sameSite: "strict",
     },
   })

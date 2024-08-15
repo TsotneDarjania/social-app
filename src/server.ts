@@ -11,9 +11,6 @@ db.once("connected", () => {
 
 const app = Config.expressApp;
 
-// Create Static Server
-app.use(express.static("public"));
-
 app.use(apiRoutes);
 app.use(pageRouter);
 
