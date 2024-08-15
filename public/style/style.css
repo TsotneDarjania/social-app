@@ -113,3 +113,26 @@ body {
 .closeBtn:hover {
   background-color: #b7bbbe;
 }
+
+#header {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+#userName {
+  color: #007bff;
+  cursor: pointer;
+
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#logOutIcon {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bold;
+
+  filter: saturate(0);
+}

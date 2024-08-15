@@ -13,7 +13,9 @@
         <div id="header">
           <div id="userProfile">
             <div id="userName"></div>
-            <button id="logoutBtn">log out</button>
+            <img id="logoutIcon" src="<%= logOutImage %>" alt="logout" />
+            <!-- <img id="logoutIcon" src="assets/log-out.png" alt="logout" /> -->
+            <!-- <button id="logoutBtn">log out</button> -->
           </div>
         </div>
       </div>
@@ -39,7 +41,6 @@
             />
 
             <button id="LoginBtn" type="button" class="LoginBtn">Login</button>
-            <div class="forgotBtn">Forgotten password?</div>
             <div class="separator"></div>
 
             <button type="button" class="createBtn" id="createAccountBtn">
@@ -99,6 +100,6 @@
       };
     </script>
 
-    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/bundle.js"></script>
   </body>
 </html>
