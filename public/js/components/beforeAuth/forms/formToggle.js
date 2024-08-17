@@ -1,11 +1,16 @@
-import { FORMS } from "../../../modules/dom.js";
+import renderSignUpForm from "./registrationForm.js";
+
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("sign-up-form");
 
 export const showSignUpForm = () => {
-  FORMS.loginForm.style.display = "none";
-  FORMS.signupForm.style.display = "block";
+  renderSignUpForm();
+
+  loginForm.style.display = "none";
+  signupForm.style.display = "block";
 };
 
 export const showLoginForm = () => {
-  FORMS.signupForm.style.display = "none";
-  FORMS.loginForm.style.display = "block";
+  signupForm.style.display = "none";
+  loginForm.style.display = "block";
 };

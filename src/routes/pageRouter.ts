@@ -11,7 +11,10 @@ pageRouter.get("/", async (req, res) => {
 
   const user = await User.findOne({ _id: session.userId });
 
-  const file = await fs.readFileSync("public/assets/log-out.png");
+  const users = await User.find({});
+  const usersList = users.map((item) => item.username);
+
+  const file = await fs.readFileSync("public/assets/logOutIcon.png");
   const base64 = file.toString("base64");
   const logOutImage = `data:image/png;base64,${base64}`;
 
@@ -19,6 +22,7 @@ pageRouter.get("/", async (req, res) => {
     authenticated: isAuthenticated(req),
     username: user?.username,
     logOutImage,
+    usersList,
   });
 });
 
