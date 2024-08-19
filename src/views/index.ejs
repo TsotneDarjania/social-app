@@ -8,40 +8,42 @@
   </head>
 
   <body>
-    <div style="display: none" id="authenticated-content">
-      <div id="header">
-        <div class="logo_search_view">
-          <div id="socioSpace">SOCIOSPACE</div>
-          <input type="search" id="headerSearch" />
+    <div class="wrapper">
+      <div style="display: none" id="authenticated-content">
+        <div id="header">
+          <div class="logo_search_view">
+            <div id="socioSpace">SOCIOSPACE</div>
+            <input type="search" id="headerSearch" />
+          </div>
+
+          <div class="navBar">
+            <a href="#">Home</a>
+            <a href="#">Story</a>
+            <a href="#">Notifications</a>
+          </div>
+
+          <div id="userProfile">
+            <div id="userName"><%= username %></div>
+            <img id="logOutIcon" src="<%= logOutImage %>" alt="logout" />
+          </div>
         </div>
 
-        <div class="navBar">
-          <a href="#">Home</a>
-          <a href="#">Story</a>
-          <a href="#">Notifications</a>
-        </div>
+        <div class="main" id="main">
+          <h3>users</h3>
 
-        <div id="userProfile">
-          <div id="userName"><%= username %></div>
-          <img id="logOutIcon" src="<%= logOutImage %>" alt="logout" />
+          <ul>
+            <% usersList.forEach(function(item) { %>
+            <li><%= item %></li>
+            <% }); %>
+          </ul>
         </div>
       </div>
 
-      <div class="main" id="main">
-        <h3>users</h3>
+      <div style="display: none" id="unauthenticated-content">
+        <div id="login-form"></div>
 
-        <ul>
-          <% usersList.forEach(function(item) { %>
-          <li><%= item %></li>
-          <% }); %>
-        </ul>
+        <div class="sign-up-form" id="sign-up-form" style="display: none"></div>
       </div>
-    </div>
-
-    <div style="display: none" id="unauthenticated-content">
-      <div id="login-form"></div>
-
-      <div class="sign-up-form" id="sign-up-form" style="display: none"></div>
     </div>
 
     <script>

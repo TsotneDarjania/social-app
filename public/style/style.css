@@ -4,6 +4,12 @@ body {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
 }
 
@@ -11,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
 }
 
 /* header */
@@ -75,6 +82,12 @@ body {
 /* main */
 .main {
   padding: 20px;
+}
+
+#unauthenticated-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* forms */

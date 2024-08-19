@@ -94,3 +94,10 @@ export const logOut = async () => {
       }
     });
 };
+
+export const logoutEventListener = () => {
+  const logOutIcon = document.getElementById("logOutIcon");
+  if (logOutIcon) {
+    logOutIcon.addEventListener("click", logOut);
+  }
+};
