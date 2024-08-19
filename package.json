@@ -21,6 +21,7 @@
     "dotenv": "^16.4.5",
     "esno": "^4.7.0",
     "nodemon": "^3.1.4",
+    "ts-loader": "^9.5.1",
     "typescript": "^5.5.4",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4"

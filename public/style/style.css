@@ -3,16 +3,94 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
-}
-
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   background-color: #f4f4f4;
 }
 
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#authenticated-content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+/* header */
+#header {
+  display: flex;
+  background-color: rgb(247, 248, 251);
+  border-bottom: 1px solid rgb(233, 232, 232);
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 50px;
+}
+
+.logo_search_view {
+  display: flex;
+  align-items: center;
+}
+
+#socioSpace {
+  color: #0f549e;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#headerSearch {
+  all: unset;
+  font-size: 13px;
+  border-radius: 10px;
+  border: 1px solid rgb(183, 183, 183);
+  padding: 0 10px;
+  height: 30px;
+  width: 70%;
+  margin-left: 20px;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.navBar a {
+  text-decoration: none;
+}
+
+#userProfile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#userName {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#logOutIcon {
+  color: #007bff;
+  cursor: pointer;
+}
+
+/* main */
+.main {
+  padding: 20px;
+}
+
+#unauthenticated-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* forms */
 .form {
   display: flex;
   flex-direction: column;
@@ -112,27 +190,4 @@ body {
 
 .closeBtn:hover {
   background-color: #b7bbbe;
-}
-
-#header {
-  position: absolute;
-  right: 20px;
-  top: 20px;
-}
-
-#userName {
-  color: #007bff;
-  cursor: pointer;
-
-  font-size: 30px;
-  font-weight: bold;
-}
-
-#logOutIcon {
-  color: #007bff;
-  cursor: pointer;
-  font-size: 30px;
-  font-weight: bold;
-
-  filter: saturate(0);
 }

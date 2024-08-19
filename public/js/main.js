@@ -1,7 +1,8 @@
-import setupEventListeners from "./modules/eventHandlers.js";
-import { authCheck } from "./modules/auth.js";
+import renderLoginForm from "./components/beforeAuth/forms/loginForm.ts";
+import { authCheck, logoutEventListener } from "./modules/auth.ts";
 
 window.addEventListener("DOMContentLoaded", () => {
   authCheck();
-  setupEventListeners();
+  renderLoginForm();
+  logoutEventListener();
 });

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ES6",
+    "outDir": "./public/js", // Output directory for compiled JS
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["public/js/**/*"], // Include backend and frontend TS files
+  "exclude": ["node_modules"] // Exclude dependencies
+}

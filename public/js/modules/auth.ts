@@ -1,21 +1,34 @@
-import { fetchData } from "./api.js";
-import { showLoginForm } from "../components/beforeAuth/forms/formToggle.js";
-import { registrationValidation } from "../validation/index.js";
-import { FORMS, HEADER, MAIN } from "./dom.js";
-import { baseUrl } from "../helpers/constants.js";
+declare global {
+  interface Window {
+    userData: {
+      authenticated: string;
+      username: string;
+    };
+  }
+}
+
+import { fetchData } from "./api";
+import { showLoginForm } from "../components/beforeAuth/forms/formToggle";
+import { registrationValidation } from "../validation/index";
+import { MAIN } from "./dom";
+import { baseUrl } from "../helpers/constants";
 
 export const authCheck = () => {
   if (window.userData.authenticated === "true") {
-    MAIN.authenticatedContent.style.display = "block";
-    HEADER.userName.innerHTML = window.userData.username;
+    if (MAIN.authenticatedContent)
+      MAIN.authenticatedContent.style.display = "block";
   } else {
-    MAIN.unauthenticatedContent.style.display = "block";
+    if (MAIN.unauthenticatedContent)
+      MAIN.unauthenticatedContent.style.display = "block";
   }
 };
 
 export const login = () => {
-  const loginEmail = FORMS.loginEmail.value;
-  const loginPassword = FORMS.loginPassword.value;
+  const loginEmail = (document.getElementById("loginEmail") as HTMLInputElement)
+    ?.value;
+  const loginPassword = (
+    document.getElementById("loginPassword") as HTMLInputElement
+  )?.value;
 
   const url = `${baseUrl}/api/user/login`;
   const body = JSON.stringify({
@@ -48,9 +61,12 @@ export const login = () => {
 };
 
 export const registration = () => {
-  const email = FORMS.registrationEmail.value;
-  const password = FORMS.registrationPassword.value;
-  const username = FORMS.registrationUserName.value;
+  const email = (document.getElementById("reg-email") as HTMLInputElement)
+    ?.value;
+  const password = (document.getElementById("reg-password") as HTMLInputElement)
+    ?.value;
+  const username = (document.getElementById("reg-username") as HTMLInputElement)
+    ?.value;
 
   if (!registrationValidation(email, password, username)) {
     alert("Please fill in all fields");
@@ -81,7 +97,6 @@ export const registration = () => {
 
 export const logOut = async () => {
   const url = `${baseUrl}/api/user/logout`;
-
   const res = fetchData(url, "POST");
 
   res
@@ -95,4 +110,11 @@ export const logOut = async () => {
         alert("Failed to log out");
       }
     });
+};
+
+export const logoutEventListener = () => {
+  const logOutIcon = document.getElementById("logOutIcon");
+  if (logOutIcon) {
+    logOutIcon.addEventListener("click", logOut);
+  }
 };

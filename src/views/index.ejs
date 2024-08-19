@@ -8,88 +8,41 @@
   </head>
 
   <body>
-    <div class="main">
+    <div class="wrapper">
       <div style="display: none" id="authenticated-content">
         <div id="header">
-          <div id="userProfile">
-            <div id="userName"></div>
-            <img id="logoutIcon" src="<%= logOutImage %>" alt="logout" />
-            <!-- <img id="logoutIcon" src="assets/log-out.png" alt="logout" /> -->
-            <!-- <button id="logoutBtn">log out</button> -->
+          <div class="logo_search_view">
+            <div id="socioSpace">SOCIOSPACE</div>
+            <input type="search" id="headerSearch" />
           </div>
+
+          <div class="navBar">
+            <a href="#">Home</a>
+            <a href="#">Story</a>
+            <a href="#">Notifications</a>
+          </div>
+
+          <div id="userProfile">
+            <div id="userName"><%= username %></div>
+            <img id="logOutIcon" src="<%= logOutImage %>" alt="logout" />
+          </div>
+        </div>
+
+        <div class="main" id="main">
+          <h3>users</h3>
+
+          <ul>
+            <% usersList.forEach(function(item) { %>
+            <li><%= item %></li>
+            <% }); %>
+          </ul>
         </div>
       </div>
 
       <div style="display: none" id="unauthenticated-content">
-        <div id="login-form">
-          <form class="form">
-            <h2>Log in</h2>
-            <input
-              id="loginEmail"
-              type="email"
-              name="email"
-              placeholder="email"
-              required
-            />
+        <div id="login-form"></div>
 
-            <input
-              id="loginPassword"
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-
-            <button id="LoginBtn" type="button" class="LoginBtn">Login</button>
-            <div class="separator"></div>
-
-            <button type="button" class="createBtn" id="createAccountBtn">
-              Create Account
-            </button>
-          </form>
-        </div>
-
-        <div class="sign-up-form" id="sign-up-form" style="display: none">
-          <form class="form">
-            <div class="sign-up-header">
-              <h2>Sign Up</h2>
-
-              <button
-                type="button"
-                class="closeBtn"
-                id="closeRegistrationFormBtn"
-              >
-                X
-              </button>
-            </div>
-
-            <input
-              id="reg-username"
-              type="text"
-              name="username"
-              placeholder="Username"
-              required
-            />
-            <input
-              id="reg-password"
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-
-            <input
-              id="reg-email"
-              type="email"
-              name="email"
-              placeholder="Email"
-              required
-            />
-            <button type="button" id="sign-up-button" class="SignUpBtn">
-              Sign Up
-            </button>
-          </form>
-        </div>
+        <div class="sign-up-form" id="sign-up-form" style="display: none"></div>
       </div>
     </div>
 
