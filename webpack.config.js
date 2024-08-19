@@ -11,4 +11,16 @@ export default {
     path: path.resolve(__dirname, "public/js"),
     filename: "bundle.js", // Output bundle file
   },
+  resolve: {
+    extensions: [".js", ".ts", ".tsx"],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
 };

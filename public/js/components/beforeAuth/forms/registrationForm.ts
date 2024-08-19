@@ -1,5 +1,5 @@
-import { registration } from "../../../modules/auth.js";
-import { showLoginForm } from "./formToggle.js";
+import { registration } from "../../../modules/auth";
+import { showLoginForm } from "./formToggle";
 
 const html = `<form class="form">
             <div class="sign-up-header">
@@ -43,15 +43,15 @@ const html = `<form class="form">
 
 const renderSignUpForm = () => {
   const signUpForm = document.getElementById("sign-up-form");
-  signUpForm.innerHTML = html;
+  if (signUpForm) signUpForm.innerHTML = html;
 
   const signUpButton = document.getElementById("sign-up-button");
   const closeRegistrationFormBtn = document.getElementById(
     "closeRegistrationFormBtn"
   );
 
-  closeRegistrationFormBtn.addEventListener("click", showLoginForm);
-  signUpButton.addEventListener("click", registration);
+  closeRegistrationFormBtn?.addEventListener("click", showLoginForm);
+  signUpButton?.addEventListener("click", registration);
 };
 
 export default renderSignUpForm;

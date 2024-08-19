@@ -1,4 +1,3 @@
-import express from "express";
 import apiRoutes from "./routes/apiRoutes";
 import Config from "./config";
 import pageRouter from "./routes/pageRouter";

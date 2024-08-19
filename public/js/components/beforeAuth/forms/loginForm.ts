@@ -1,5 +1,5 @@
-import { login } from "../../../modules/auth.js";
-import { showSignUpForm } from "./formToggle.js";
+import { login } from "../../../modules/auth";
+import { showSignUpForm } from "./formToggle";
 
 const html = `<form class="form">
             <h2>Log in</h2>
@@ -29,14 +29,14 @@ const html = `<form class="form">
 
 const renderLoginForm = () => {
   const loginForm = document.getElementById("login-form");
-  loginForm.innerHTML = html;
+  if (loginForm) loginForm.innerHTML = html;
 
   const loginButton = document.getElementById("LoginBtn");
   const createAccountBtn = document.getElementById("createAccountBtn");
 
-  createAccountBtn.addEventListener("click", showSignUpForm);
-  loginButton.addEventListener("click", login);
-  createAccountBtn.addEventListener("click", showSignUpForm);
+  createAccountBtn?.addEventListener("click", showSignUpForm);
+  loginButton?.addEventListener("click", login);
+  createAccountBtn?.addEventListener("click", showSignUpForm);
 };
 
 export default renderLoginForm;

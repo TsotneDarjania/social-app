@@ -1,4 +1,4 @@
-export const fetchData = async (url, method, body) => {
+export const fetchData = async (url: string, method: string, body?: any) => {
   const header = {
     "Content-Type": "application/json",
   };
