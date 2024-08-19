@@ -9,8 +9,5 @@ export const fetchData = async (url: string, method: string, body?: any) => {
     headers: header,
   });
 
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
   return response;
 };

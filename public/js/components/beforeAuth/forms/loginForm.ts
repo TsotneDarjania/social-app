@@ -20,7 +20,9 @@ const html = `<form class="form">
             />
 
             <button id="LoginBtn" type="button" class="LoginBtn">Login</button>
+            <p id="login-error-message" class="auth-error-message"></p>
             <div class="separator"></div>
+
 
             <button type="button" class="createBtn" id="createAccountBtn">
               Create Account

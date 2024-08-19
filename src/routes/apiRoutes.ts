@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { login, logOut, registration } from "../controllers/userController";
+import {
+  login,
+  logOut,
+  registration,
+  sendFriendRequest,
+} from "../controllers/userController";
 import {
   userLoginValidation,
   userRegistrationValidation,
@@ -13,5 +18,8 @@ apiRoutes.post("/api/user/login", userLoginValidation, login);
 apiRoutes.post("/api/user/register", userRegistrationValidation, registration);
 // Logout
 apiRoutes.post("/api/user/logout", logOut);
+
+// Sent Friend Request
+apiRoutes.post("/api/user/send-friend-request", sendFriendRequest);
 
 export default apiRoutes;

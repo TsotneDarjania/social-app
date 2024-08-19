@@ -191,3 +191,74 @@ body {
 .closeBtn:hover {
   background-color: #b7bbbe;
 }
+
+/* Auth error message */
+.auth-error-message {
+  color: rgb(134, 22, 22);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.users-list {
+  position: relative;
+  background-color: #111020;
+  width: 20%;
+
+  min-height: 65vh;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  overflow-y: scroll;
+}
+
+.registered-user {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 18px;
+
+  justify-content: space-between;
+
+  width: 100%;
+
+  display: flex;
+  gap: 15px;
+}
+
+.add-friend-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0px 8px 0px 8px;
+
+  transition: all 0.3s;
+}
+
+.add-friend-button:hover {
+  background-color: #0056b3;
+}
+
+a {
+  position: relative;
+}
+
+#notification_number {
+  position: absolute;
+  background-color: #121213;
+  color: rgb(255, 255, 255);
+  border-radius: 50%;
+  padding: 0px 10px;
+  font-size: 22px;
+
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 20px;
+  width: min-content;
+}

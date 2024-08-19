@@ -19,7 +19,10 @@
           <div class="navBar">
             <a href="#">Home</a>
             <a href="#">Story</a>
-            <a href="#">Notifications</a>
+            <a href="#">
+              <span style="display: none" id="notification_number">1</span>
+              Notifications</a
+            >
           </div>
 
           <div id="userProfile">
@@ -31,9 +34,17 @@
         <div class="main" id="main">
           <h3>users</h3>
 
-          <ul>
+          <ul class="users-list">
             <% usersList.forEach(function(item) { %>
-            <li><%= item %></li>
+            <li class="registered-user">
+              <p><%= item %></p>
+              <button
+                onclick="sendFriendRequest(`<%= item %>`)"
+                class="add-friend-button"
+              >
+                Add Friend
+              </button>
+            </li>
             <% }); %>
           </ul>
         </div>
@@ -50,7 +61,34 @@
       window.userData = {
         authenticated: "<%= authenticated %>",
         username: "<%= username %>",
+        userFriends: `<%= userFriends  %>`,
       };
+
+      if (window.userData.userFriends !== "") {
+        console.log(window.userData.userFriends);
+        document.getElementById("notification_number").style.display = "block";
+      }
+
+      // console.log(window.userData.userFriends);
+
+      function sendFriendRequest(friendName) {
+        fetch("/api/user/send-friend-request", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userName: window.userData.username,
+            friendName,
+          }),
+        }).then((response) => {
+          if (response.status === 200) {
+            alert("Friend request sent successfully");
+          } else {
+            alert("Failed to send friend request");
+          }
+        });
+      }
     </script>
 
     <script type="module" src="./js/bundle.js"></script>

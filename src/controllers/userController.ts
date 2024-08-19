@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response) => {
   const errors = result.array().map((item) => item.msg);
 
   if (errors.length) {
-    res.status(400).send({ errors });
+    res.status(400).json({ errors });
     return;
   }
 
@@ -69,6 +69,18 @@ export function logOut(req: Request, res: Response) {
     res.clearCookie("sid");
     res.json("success");
   });
+}
+
+export function sendFriendRequest(req: Request, res: Response) {
+  const { userName, friendName } = req.body;
+
+  User.updateOne({ username: friendName }, { $push: { friends: userName } })
+    .then(() => {
+      res.json("success");
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Internal server error" });
+    });
 }
 
 export const isAuthenticated = (req: Request) => {

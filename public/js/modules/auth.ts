@@ -40,19 +40,20 @@ export const login = () => {
 
   res
     .then((response) => {
+      // @ts-ignore
       if (response.status === 401) {
         alert("Invalid email or password");
         return;
       }
+      // @ts-ignore
       return response.json();
     })
     .then((data) => {
       if (!data) return;
       if (data.errors) {
-        const errorMessage = data.errors[0];
-        alert(errorMessage);
+        document.getElementById("login-error-message")!.innerHTML =
+          data.errors[0];
       }
-      console.log(data);
 
       if (data == "success") {
         window.location.reload();
