@@ -72,9 +72,12 @@ export function logOut(req: Request, res: Response) {
 }
 
 export function sendFriendRequest(req: Request, res: Response) {
-  const { userName, friendName } = req.body;
+  const { userName, userId, friendId } = req.body;
 
-  User.updateOne({ username: friendName }, { $push: { friends: userName } })
+  User.updateOne(
+    { _id: friendId },
+    { $push: { friendRequests: JSON.stringify({ userId, userName }) } }
+  )
     .then(() => {
       res.json("success");
     })

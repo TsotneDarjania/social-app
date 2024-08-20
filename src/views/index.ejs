@@ -20,7 +20,9 @@
             <a href="#">Home</a>
             <a href="#">Story</a>
             <a href="#">
-              <span style="display: none" id="notification_number">1</span>
+              <span style="display: none" id="notification_number"
+                ><%= friendRequests?.length %></span
+              >
               Notifications</a
             >
           </div>
@@ -35,11 +37,11 @@
           <h3>users</h3>
 
           <ul class="users-list">
-            <% usersList.forEach(function(item) { %>
+            <% registeredUsersList.forEach(function(item) { %>
             <li class="registered-user">
-              <p><%= item %></p>
+              <p><%= item.username %></p>
               <button
-                onclick="sendFriendRequest(`<%= item %>`)"
+                onclick="sendFriendRequest(`<%= item.id %>`)"
                 class="add-friend-button"
               >
                 Add Friend
@@ -61,17 +63,14 @@
       window.userData = {
         authenticated: "<%= authenticated %>",
         username: "<%= username %>",
-        userFriends: `<%= userFriends  %>`,
+        userId: `<%= userId %>`,
       };
 
-      if (window.userData.userFriends !== "") {
-        console.log(window.userData.userFriends);
+      if (`<%= friendRequests.length %>`) {
         document.getElementById("notification_number").style.display = "block";
       }
 
-      // console.log(window.userData.userFriends);
-
-      function sendFriendRequest(friendName) {
+      function sendFriendRequest(friendId) {
         fetch("/api/user/send-friend-request", {
           method: "POST",
           headers: {
@@ -79,7 +78,8 @@
           },
           body: JSON.stringify({
             userName: window.userData.username,
-            friendName,
+            userId: window.userData.userId,
+            friendId,
           }),
         }).then((response) => {
           if (response.status === 200) {
