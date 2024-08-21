@@ -1,5 +1,5 @@
 import fs from "fs";
-import { FriendRequest } from "../types/friendRequests";
+import { FriendRequest, Friends } from "../types/friendRequests";
 
 export const imageToBase64 = async (imagePath: string) => {
   const file = await fs.readFileSync(imagePath);
@@ -26,4 +26,23 @@ export const parseFriendRequests = (
   }
 
   return friendRequests;
+};
+
+export const parseFriends = (friendsStr: string[] | undefined): Friends[] => {
+  let friends: Friends[] = [];
+
+  if (Array.isArray(friendsStr)) {
+    try {
+      friends = friendsStr.map((str: string) => {
+        if (typeof str === "string") {
+          return JSON.parse(str) as Friends;
+        }
+        throw new Error("Invalid JSON string");
+      });
+    } catch (e) {
+      console.error("Failed to parse friendRequests:", e);
+    }
+  }
+
+  return friends;
 };

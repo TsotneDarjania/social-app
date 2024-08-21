@@ -86,6 +86,42 @@ export const sendFriendRequest = (req: Request, res: Response) => {
     });
 };
 
+export const confirmFriendRequest = async (req: Request, res: Response) => {
+  const { userName, userId, friendId, friendName } = req.body;
+
+  try {
+    await User.updateOne(
+      { _id: friendId },
+      { $push: { friends: JSON.stringify({ userId, userName }) } }
+    );
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          friends: JSON.stringify({ userId: friendId, userName: friendName }),
+        },
+      }
+    );
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          friendRequests: JSON.stringify({
+            userId: friendId,
+            userName: friendName,
+          }),
+        },
+      }
+    );
+
+    res.json("success");
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error", error: err });
+  }
+};
+
 export const isAuthenticated = (req: Request) => {
   const session = req.session as unknown as CustomSession;
   if (session?.userId) {

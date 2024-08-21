@@ -2,7 +2,7 @@ import { Router } from "express";
 import { isAuthenticated } from "../controllers/userController";
 import User from "../models/user";
 import { CustomSession } from "../types/session";
-import { imageToBase64, parseFriendRequests } from "../helper";
+import { imageToBase64, parseFriendRequests, parseFriends } from "../helper";
 
 const pageRouter = Router();
 
@@ -20,6 +20,9 @@ pageRouter.get("/", async (req, res) => {
   const friendRequestsStr = user?.friendRequests;
   const friendRequests = parseFriendRequests(friendRequestsStr);
 
+  const userFriendsStr = user?.friends;
+  const userFriends = parseFriends(userFriendsStr);
+
   // Server side image to base64
   const logOutImage = await imageToBase64("public/assets/logOutIcon.png");
 
@@ -27,7 +30,7 @@ pageRouter.get("/", async (req, res) => {
     authenticated: isAuthenticated(req),
     username: user?.username,
     userId: user?._id,
-    userFriends: user?.friends,
+    userFriends,
     friendRequests,
     logOutImage,
     registeredUsersList,

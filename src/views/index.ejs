@@ -39,21 +39,37 @@
         </div>
 
         <div class="main" id="main">
-          <h3>users</h3>
+          <div class="usersWrapper">
+            <h3>users</h3>
 
-          <ul class="users-list">
-            <% registeredUsersList.forEach(function(item) { %>
-            <li class="registered-user">
-              <p><%= item.username %></p>
-              <button
-                onclick="sendFriendRequest(`<%= item.id %>`)"
-                class="add-friend-button"
-              >
-                Add Friend
-              </button>
-            </li>
-            <% }); %>
-          </ul>
+            <ul class="users-list">
+              <% registeredUsersList.forEach(function(item) { %>
+              <li class="registered-user">
+                <p><%= item.username %></p>
+                <button
+                  onclick="sendFriendRequest(`<%= item.id %>`)"
+                  class="add-friend-button"
+                >
+                  Add Friend
+                </button>
+              </li>
+              <% }); %>
+            </ul>
+          </div>
+
+          <div class="friendsWrapper">
+            <div class="usersWrapper">
+              <h3>friends</h3>
+
+              <ul class="users-list">
+                <% userFriends.forEach(function(item) { %>
+                <li class="registered-user">
+                  <p><%= item.userName %></p>
+                </li>
+                <% }); %>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div id="notificationsModalContainer">
@@ -68,7 +84,12 @@
               <li class="friendRequestCard">
                 <p><%= item.userName %></p>
 
-                <button class="confirmBtn">confirm</button>
+                <button
+                  id="confirmBtn"
+                  onclick="confirmFriendRequest(`<%= item.userId %>`, `<%= item.userName %>`)"
+                >
+                  confirm
+                </button>
               </li>
               <% }); %>
             </div>
@@ -106,6 +127,27 @@
             alert("Friend request sent successfully");
           } else {
             alert("Failed to send friend request");
+          }
+        });
+      }
+
+      function confirmFriendRequest(friendId, friendName) {
+        fetch("http://localhost:3000/api/user/confirm-friend-request", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userName: window.userData.username,
+            userId: window.userData.userId,
+            friendId,
+            friendName,
+          }),
+        }).then((response) => {
+          if (response.status === 200) {
+            alert("Friend request confirmed successfully");
+          } else {
+            alert("Failed to confirm friend request");
           }
         });
       }
