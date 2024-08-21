@@ -24,12 +24,12 @@ export const logoutEventListener = () => {
 export const authCheck = () => {
   if (window.userData.authenticated === "true") {
     if (MAIN.authenticatedContent)
-      MAIN.authenticatedContent.style.display = "block";
+      MAIN.authenticatedContent.style.display = "flex";
 
     logoutEventListener();
   } else {
     if (MAIN.unauthenticatedContent)
-      MAIN.unauthenticatedContent.style.display = "block";
+      MAIN.unauthenticatedContent.style.display = "flex";
 
     renderLoginForm();
   }
