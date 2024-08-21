@@ -61,7 +61,7 @@ export const login = async (req: Request, res: Response) => {
   res.json("success");
 };
 
-export function logOut(req: Request, res: Response) {
+export const logOut = (req: Request, res: Response) => {
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ message: "Internal server error" });
@@ -69,9 +69,9 @@ export function logOut(req: Request, res: Response) {
     res.clearCookie("sid");
     res.json("success");
   });
-}
+};
 
-export function sendFriendRequest(req: Request, res: Response) {
+export const sendFriendRequest = (req: Request, res: Response) => {
   const { userName, userId, friendId } = req.body;
 
   User.updateOne(
@@ -84,7 +84,7 @@ export function sendFriendRequest(req: Request, res: Response) {
     .catch((err) => {
       res.status(500).json({ message: "Internal server error" });
     });
-}
+};
 
 export const isAuthenticated = (req: Request) => {
   const session = req.session as unknown as CustomSession;

@@ -10,6 +10,26 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./public/js/components/afterAuth/classes/modal.ts":
+/*!*********************************************************!*\
+  !*** ./public/js/components/afterAuth/classes/modal.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar Modal = /** @class */ (function () {\n    function Modal(modalId, modalContainer, content, openerButton) {\n        this.modalId = modalId;\n        this.content = content;\n        this.openerButton = openerButton;\n        this.modalContainer = modalContainer;\n        this.modalElement = null;\n        this.createModal();\n    }\n    Modal.prototype.createModal = function () {\n        var _this = this;\n        var _a;\n        // Create modal HTML\n        var modalHTML = \"\\n      <div class=\\\"modal\\\" id=\\\"\".concat(this.modalId, \"\\\">\\n      </div>\\n    \");\n        if (this.modalContainer) {\n            this.modalContainer.innerHTML = modalHTML;\n            this.modalElement = document.getElementById(this.modalId);\n            if (this.content)\n                (_a = this.modalElement) === null || _a === void 0 ? void 0 : _a.appendChild(this.content);\n            if (this.modalElement) {\n                var closeButton = this.modalElement.querySelector(\".close\");\n                if (closeButton) {\n                    closeButton.onclick = function () {\n                        _this.close();\n                    };\n                }\n                if (this.openerButton) {\n                    this.openerButton.onclick = function () {\n                        _this.open();\n                    };\n                }\n                // Close modal when clicking outside the content\n                window.onclick = function (event) {\n                    if (event.target === _this.modalElement) {\n                        _this.close();\n                    }\n                };\n            }\n        }\n    };\n    Modal.prototype.open = function () {\n        if (this.modalElement) {\n            this.modalElement.style.display = \"block\";\n        }\n    };\n    Modal.prototype.close = function () {\n        if (this.modalElement) {\n            this.modalElement.style.display = \"none\";\n        }\n    };\n    return Modal;\n}());\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Modal);\n\n\n//# sourceURL=webpack://social-app/./public/js/components/afterAuth/classes/modal.ts?");
+
+/***/ }),
+
+/***/ "./public/js/components/afterAuth/notificationModal.ts":
+/*!*************************************************************!*\
+  !*** ./public/js/components/afterAuth/notificationModal.ts ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _classes_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classes/modal */ \"./public/js/components/afterAuth/classes/modal.ts\");\n\nvar content = document.getElementById(\"notificationModalContent\");\nvar modalContainer = document.getElementById(\"notificationsModalContainer\");\nvar notificationBtn = document.getElementById(\"notificationBtn\");\nvar notificationModal = new _classes_modal__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"notification\", modalContainer, content, notificationBtn);\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (notificationModal);\n\n\n//# sourceURL=webpack://social-app/./public/js/components/afterAuth/notificationModal.ts?");
+
+/***/ }),
+
 /***/ "./public/js/components/beforeAuth/forms/formToggle.ts":
 /*!*************************************************************!*\
   !*** ./public/js/components/beforeAuth/forms/formToggle.ts ***!
@@ -96,7 +116,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/auth.ts */ \"./public/js/modules/auth.ts\");\n\n\nwindow.addEventListener(\"DOMContentLoaded\", () => {\n  (0,_modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__.authCheck)();\n});\n\n\n//# sourceURL=webpack://social-app/./public/js/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/auth.ts */ \"./public/js/modules/auth.ts\");\n/* harmony import */ var _components_afterAuth_notificationModal_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/afterAuth/notificationModal.ts */ \"./public/js/components/afterAuth/notificationModal.ts\");\n\n\n\nwindow.addEventListener(\"DOMContentLoaded\", () => {\n  (0,_modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__.authCheck)();\n});\n\n\n//# sourceURL=webpack://social-app/./public/js/main.js?");
 
 /***/ })
 
