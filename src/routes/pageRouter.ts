@@ -2,7 +2,7 @@ import { Router } from "express";
 import { isAuthenticated } from "../controllers/userController";
 import User from "../models/user";
 import { CustomSession } from "../types/session";
-import { imageToBase64 } from "../helper";
+import { imageToBase64, parseFriendRequests, parseFriends } from "../helper";
 
 const pageRouter = Router();
 
@@ -12,7 +12,16 @@ pageRouter.get("/", async (req, res) => {
   const user = await User.findOne({ _id: session.userId });
 
   const users = await User.find({ username: { $ne: user?.username } });
-  const usersList = users.map((item) => item.username);
+  const registeredUsersList = users.map((item) => ({
+    username: item.username,
+    id: item._id,
+  }));
+
+  const friendRequestsStr = user?.friendRequests;
+  const friendRequests = parseFriendRequests(friendRequestsStr);
+
+  const userFriendsStr = user?.friends;
+  const userFriends = parseFriends(userFriendsStr);
 
   // Server side image to base64
   const logOutImage = await imageToBase64("public/assets/logOutIcon.png");
@@ -20,9 +29,11 @@ pageRouter.get("/", async (req, res) => {
   res.render("index", {
     authenticated: isAuthenticated(req),
     username: user?.username,
+    userId: user?._id,
+    userFriends,
+    friendRequests,
     logOutImage,
-    usersList,
-    userFriends: user?.friends,
+    registeredUsersList,
   });
 });
 

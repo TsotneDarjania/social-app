@@ -12,14 +12,26 @@ import { showLoginForm } from "../components/beforeAuth/forms/formToggle";
 import { registrationValidation } from "../validation/index";
 import { MAIN } from "./dom";
 import { baseUrl } from "../helpers/constants";
+import renderLoginForm from "../components/beforeAuth/forms/loginForm";
+
+export const logoutEventListener = () => {
+  const logOutIcon = document.getElementById("logOutIcon");
+  if (logOutIcon) {
+    logOutIcon.addEventListener("click", logOut);
+  }
+};
 
 export const authCheck = () => {
   if (window.userData.authenticated === "true") {
     if (MAIN.authenticatedContent)
-      MAIN.authenticatedContent.style.display = "block";
+      MAIN.authenticatedContent.style.display = "flex";
+
+    logoutEventListener();
   } else {
     if (MAIN.unauthenticatedContent)
-      MAIN.unauthenticatedContent.style.display = "block";
+      MAIN.unauthenticatedContent.style.display = "flex";
+
+    renderLoginForm();
   }
 };
 
@@ -111,11 +123,4 @@ export const logOut = async () => {
         alert("Failed to log out");
       }
     });
-};
-
-export const logoutEventListener = () => {
-  const logOutIcon = document.getElementById("logOutIcon");
-  if (logOutIcon) {
-    logOutIcon.addEventListener("click", logOut);
-  }
 };

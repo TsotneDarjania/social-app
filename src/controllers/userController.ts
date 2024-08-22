@@ -61,7 +61,7 @@ export const login = async (req: Request, res: Response) => {
   res.json("success");
 };
 
-export function logOut(req: Request, res: Response) {
+export const logOut = (req: Request, res: Response) => {
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ message: "Internal server error" });
@@ -69,19 +69,58 @@ export function logOut(req: Request, res: Response) {
     res.clearCookie("sid");
     res.json("success");
   });
-}
+};
 
-export function sendFriendRequest(req: Request, res: Response) {
-  const { userName, friendName } = req.body;
+export const sendFriendRequest = (req: Request, res: Response) => {
+  const { userName, userId, friendId } = req.body;
 
-  User.updateOne({ username: friendName }, { $push: { friends: userName } })
+  User.updateOne(
+    { _id: friendId },
+    { $push: { friendRequests: JSON.stringify({ userId, userName }) } }
+  )
     .then(() => {
       res.json("success");
     })
     .catch((err) => {
       res.status(500).json({ message: "Internal server error" });
     });
-}
+};
+
+export const confirmFriendRequest = async (req: Request, res: Response) => {
+  const { userName, userId, friendId, friendName } = req.body;
+
+  try {
+    await User.updateOne(
+      { _id: friendId },
+      { $push: { friends: JSON.stringify({ userId, userName }) } }
+    );
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          friends: JSON.stringify({ userId: friendId, userName: friendName }),
+        },
+      }
+    );
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          friendRequests: JSON.stringify({
+            userId: friendId,
+            userName: friendName,
+          }),
+        },
+      }
+    );
+
+    res.json("success");
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error", error: err });
+  }
+};
 
 export const isAuthenticated = (req: Request) => {
   const session = req.session as unknown as CustomSession;
