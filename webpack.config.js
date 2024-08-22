@@ -1,14 +1,9 @@
 import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export default {
-  entry: "./public/js/main.js", // Entry point of your application
+  entry: "./public/index.tsx", // Entry point of your application
   output: {
-    path: path.resolve(__dirname, "public/js"),
+    path: path.resolve("public/static"),
     filename: "bundle.js", // Output bundle file
   },
   resolve: {
@@ -21,6 +16,36 @@ export default {
         use: "ts-loader",
         exclude: /node_modules/,
       },
+      {
+        test: /\.(ts|tsx)$/, // Test for .ts and .tsx files
+        use: "babel-loader", // Use Babel to handle TypeScript and JSX
+        exclude: /node_modules/, // Exclude the node_modules folder
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+          },
+        ],
+        exclude: /\.module\.css$/,
+      },
+      {
+        test: /\.module\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                namedExport: false,
+              },
+            },
+          },
+        ],
+      },
     ],
   },
+  mode: "production",
 };

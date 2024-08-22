@@ -4,11 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Social App</title>
-    <link rel="stylesheet" href="style/style.css" />
   </head>
 
   <body>
-    <div style="display: none" id="authenticated-content">
+    <div id="root"></div>
+    <script>
+      window.authenticated = "<%= authenticated %>";
+
+      window.appData = {
+        logOutImage: "<%= logOutImage %>",
+      };
+
+      window.userData = {
+        username: "<%= username %>",
+        userId: `<%= userId %>`,
+        notifications: `<%= friendRequests?.length %>`,
+        friendRequests: `<% friendRequests %>`,
+        userFriends: `<% userFriends %>`,
+      };
+
+      console.log(1111);
+    </script>
+    <script src="./static/bundle.js"></script>
+    <!-- <div style="display: none" id="authenticated-content">
       <div id="header">
         <div class="logo_search_view">
           <div id="socioSpace">SOCIOSPACE</div>
@@ -99,9 +117,9 @@
       <div id="login-form"></div>
 
       <div class="sign-up-form" id="sign-up-form" style="display: none"></div>
-    </div>
+    </div> -->
 
-    <script>
+    <!-- <script>
       window.userData = {
         authenticated: "<%= authenticated %>",
         username: "<%= username %>",
@@ -150,6 +168,6 @@
       }
     </script>
 
-    <script type="module" src="./js/bundle.js" defer></script>
+    <script type="module" src="./js/bundle.js" defer></script> -->
   </body>
 </html>

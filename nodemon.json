@@ -1,0 +1,5 @@
+{
+  "watch": ["app.ts", "src/"],
+  "ext": "ts",
+  "exec": "esno app.ts"
+}

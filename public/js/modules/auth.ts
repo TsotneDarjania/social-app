@@ -1,11 +1,11 @@
-declare global {
-  interface Window {
-    userData: {
-      authenticated: string;
-      username: string;
-    };
-  }
-}
+// declare global {
+//   interface Window {
+//     userData: {
+//       authenticated: string;
+//       username: string;
+//     };
+//   }
+// }
 
 import { fetchData } from "./api";
 import { showLoginForm } from "../components/beforeAuth/forms/formToggle";

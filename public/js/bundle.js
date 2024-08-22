@@ -116,7 +116,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/auth.ts */ \"./public/js/modules/auth.ts\");\n/* harmony import */ var _components_afterAuth_notificationModal_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/afterAuth/notificationModal.ts */ \"./public/js/components/afterAuth/notificationModal.ts\");\n\n\n\nwindow.addEventListener(\"DOMContentLoaded\", () => {\n  (0,_modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__.authCheck)();\n});\n\n\n//# sourceURL=webpack://social-app/./public/js/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/auth.ts */ \"./public/js/modules/auth.ts\");\n/* harmony import */ var _components_afterAuth_notificationModal_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/afterAuth/notificationModal.ts */ \"./public/js/components/afterAuth/notificationModal.ts\");\n\r\n\r\n\r\nwindow.addEventListener(\"DOMContentLoaded\", () => {\r\n  (0,_modules_auth_ts__WEBPACK_IMPORTED_MODULE_0__.authCheck)();\r\n});\r\n\n\n//# sourceURL=webpack://social-app/./public/js/main.js?");
 
 /***/ })
 
