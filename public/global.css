@@ -4,5 +4,14 @@
   box-sizing: border-box;
 }
 
-body {
+.app {
+  flex: 1;
+}
+
+.unAuthorized {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
