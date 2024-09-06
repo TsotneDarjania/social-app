@@ -5,7 +5,7 @@ import { AppProvider } from "./store/AppProvider";
 import Body from "./components/global/body";
 import { createSignal } from "solid-js";
 import { CustomWindow } from "./types";
-import Forms from "./components/forms/forms";
+import Forms from "./components/forms";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = createSignal(false);

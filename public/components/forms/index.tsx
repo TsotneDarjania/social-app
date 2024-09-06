@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
-import LoginForm from "../loginForm";
-import RegistrationForm from "../registrationForm";
-import { FormName } from "../../../types";
+import LoginForm from "./loginForm";
+import RegistrationForm from "./registrationForm";
+import { FormName } from "../../types";
 
 const Forms = () => {
   const [form, setForm] = createSignal<FormName>("login");

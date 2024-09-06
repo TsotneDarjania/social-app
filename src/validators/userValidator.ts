@@ -1,7 +1,7 @@
 import { body } from "express-validator";
 
 export const userRegistrationValidation = [
-  body("username")
+  body("userName")
     .isLength({ min: 3 })
     .withMessage("Username must be at least 3 characters long"),
   body("password")

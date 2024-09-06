@@ -1,0 +1,17 @@
+.friendRequestCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(234, 234, 234);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  padding: 10px;
+}
+
+.confirmBtn {
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #3fb01c;
+  color: white;
+}

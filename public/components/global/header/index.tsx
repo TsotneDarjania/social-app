@@ -1,16 +1,22 @@
 import { createSignal } from "solid-js";
 import { useApp } from "../../../store/AppProvider";
-import { Appcontext, CustomWindow } from "../../../types";
+import { Appcontext, CustomWindow, User } from "../../../types";
 import { baseUrl } from "../../../utils/constants";
-import { fetchData } from "../../../utils/helpers";
+import { decodeHtmlAndParse, fetchData } from "../../../utils/helpers";
 import Modal from "../../modal";
 import style from "./style.module.css";
+import FriendRequests from "../../cards/friendRequests";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = createSignal(false);
 
   const customWindow = window as unknown as CustomWindow;
   const userData: Appcontext = useApp();
+
+  const notifications = decodeHtmlAndParse(
+    userData.notifications as unknown as string
+  );
+  const friendRequests = notifications.friendRequests;
 
   const handleModalOpen = () => {
     setIsOpen(true);
@@ -37,6 +43,24 @@ export const Header = () => {
       });
   };
 
+  const confirmFriendRequest = (friendId: string, friendName: string) => {
+    const url = `${baseUrl}/api/user/confirm-friend-request`;
+    const body = JSON.stringify({
+      userName: customWindow.userData.userName,
+      userId: customWindow.userData.userId,
+      friendId,
+      friendName,
+    });
+
+    fetchData(url, "POST", body).then((response) => {
+      if (response.status === 200) {
+        alert("Friend request confirmed successfully");
+      } else {
+        alert("Failed to confirm friend request");
+      }
+    });
+  };
+
   return (
     <div class={style.header}>
       <div class={style.logoSearchView}>
@@ -54,12 +78,10 @@ export const Header = () => {
           </button>
 
           <div
-            style={`display: ${
-              userData?.notifications > 0 ? "inline" : "none"
-            }`}
+            style={`display: ${friendRequests.length > 0 ? "inline" : "none"}`}
             class={style.notificationNumber}
           >
-            {userData?.notifications}
+            {friendRequests.length}
           </div>
         </div>
       </div>
@@ -75,7 +97,21 @@ export const Header = () => {
         ></img>
       </div>
 
-      {isOpen() && <Modal handleModalClose={handleModalClose} />}
+      {isOpen() && (
+        <Modal handleModalClose={handleModalClose} title="Friend Requests">
+          {friendRequests.length && (
+            <div>
+              {friendRequests.map((item: User) => (
+                <FriendRequests
+                  userId={item.id}
+                  userName={item.userName}
+                  onConfirmClick={confirmFriendRequest}
+                />
+              ))}
+            </div>
+          )}
+        </Modal>
+      )}
     </div>
   );
 };

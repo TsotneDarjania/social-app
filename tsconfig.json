@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "ESNext",
-   "jsx": "preserve",// Ensure JSX is set to "react"
+    "jsx": "preserve", // Ensure JSX is set to "react"
     "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
@@ -13,9 +13,6 @@
     "noEmit": true // TypeScript will not emit JS; Webpack handles this
   },
 
-  "include": [
-    "public/**/*.ts",
-    "public/**/*.tsx"
-, "public/index.jsx"],
+  "include": ["public/**/*.ts", "public/**/*.tsx", "public/index.jsx"],
   "exclude": ["node_modules"]
 }

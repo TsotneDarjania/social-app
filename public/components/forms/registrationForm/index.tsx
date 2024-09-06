@@ -12,7 +12,7 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
   const [formData, setFormData] = createSignal({
     email: "",
     password: "",
-    username: "",
+    userName: "",
   });
 
   const handleChange = (e: Event) => {
@@ -24,9 +24,9 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
   };
 
   const registration = () => {
-    const { email, password, username } = formData();
+    const { email, password, userName } = formData();
 
-    if (!registrationValidation(email, password, username)) {
+    if (!registrationValidation(email, password, userName)) {
       alert("Please fill in all fields");
       return;
     }
@@ -35,7 +35,7 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
     const body = JSON.stringify({
       email,
       password,
-      username,
+      userName,
     });
 
     fetchData(url, "POST", body)
@@ -66,12 +66,12 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
       </div>
 
       <input
-        id="reg-username"
+        id="reg-userName"
         type="text"
-        name="username"
+        name="userName"
         placeholder="Username"
         required
-        value={formData().username}
+        value={formData().userName}
         onInput={handleChange}
       />
       <input

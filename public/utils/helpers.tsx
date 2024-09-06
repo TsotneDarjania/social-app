@@ -19,10 +19,18 @@ export const fetchData = async (
 export const registrationValidation = (
   email: string,
   password: string,
-  username: string
+  userName: string
 ): boolean => {
-  if (email === "" || password === "" || username === "") {
+  if (email === "" || password === "" || userName === "") {
     return false;
   }
   return true;
+};
+
+export const decodeHtmlAndParse = (html: string) => {
+  const decodedString = html.replace(/&#34;/g, '"');
+
+  const result = JSON.parse(decodedString);
+
+  return result;
 };

@@ -2,12 +2,11 @@ import { createSignal, createContext, useContext } from "solid-js";
 import { CustomWindow } from "../types";
 
 export interface Appcontext {
-  friendRequests: string[];
-  notifications: number;
-  userFriends: string[];
+  notifications: { friendRequests: string };
+  userFriends: string;
   userId: string;
   userName: string;
-  registeredUsersList: string[];
+  registeredUsersList: string;
 }
 
 const AppContext = createContext<Appcontext | undefined>(undefined);
@@ -16,10 +15,9 @@ export function AppProvider(props: any) {
   const customWindow = window as unknown as CustomWindow;
 
   const [userData] = createSignal<Appcontext>({
-    userName: customWindow.userData.username,
+    userName: customWindow.userData.userName,
     userId: customWindow.userData.userId,
     notifications: customWindow.userData.notifications,
-    friendRequests: customWindow.userData.friendRequests,
     userFriends: customWindow.userData.userFriends,
     registeredUsersList: customWindow.userData.registeredUsersList,
   });

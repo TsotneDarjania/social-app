@@ -5,12 +5,14 @@ export interface CustomWindow extends Window {
 }
 
 type UserData = {
-  username: string;
+  userName: string;
   userId: string;
-  notifications: number;
+  notifications: {
+    friendRequests: string;
+  };
   friendRequests: string[];
-  userFriends: string[];
-  registeredUsersList: string[];
+  userFriends: string;
+  registeredUsersList: string;
 };
 
 type AppData = {
@@ -18,11 +20,17 @@ type AppData = {
 };
 
 export interface Appcontext {
-  friendRequests: string[];
-  notifications: number;
-  userFriends: string[];
+  notifications: {
+    friendRequests: string;
+  };
+  userFriends: string;
   userId: string;
   userName: string;
 }
+
+export type User = {
+  id: string;
+  userName: string;
+};
 
 export type FormName = "login" | "registration";
