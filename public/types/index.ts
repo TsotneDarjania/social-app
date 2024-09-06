@@ -7,29 +7,23 @@ export interface CustomWindow extends Window {
 type UserData = {
   userName: string;
   userId: string;
-  notifications: {
-    friendRequests: string;
-  };
-  friendRequests: string[];
+  notifications: string;
+  friendRequests: string;
   userFriends: string;
   registeredUsersList: string;
+  sentFriendRequests: string;
 };
 
 type AppData = {
   logOutImage: string;
 };
 
-export interface Appcontext {
-  notifications: {
-    friendRequests: string;
-  };
-  userFriends: string;
-  userId: string;
-  userName: string;
+export interface Notifications {
+  friendRequests: Array<User>;
 }
 
 export type User = {
-  id: string;
+  userId: string;
   userName: string;
 };
 

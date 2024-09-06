@@ -1,8 +1,8 @@
 import { createSignal } from "solid-js";
-import { useApp } from "../../../store/AppProvider";
-import { Appcontext, CustomWindow, User } from "../../../types";
+import { Appcontext, useApp } from "../../../store/AppProvider";
+import { CustomWindow, User } from "../../../types";
 import { baseUrl } from "../../../utils/constants";
-import { decodeHtmlAndParse, fetchData } from "../../../utils/helpers";
+import { fetchData } from "../../../utils/helpers";
 import Modal from "../../modal";
 import style from "./style.module.css";
 import FriendRequests from "../../cards/friendRequests";
@@ -13,10 +13,7 @@ export const Header = () => {
   const customWindow = window as unknown as CustomWindow;
   const userData: Appcontext = useApp();
 
-  const notifications = decodeHtmlAndParse(
-    userData.notifications as unknown as string
-  );
-  const friendRequests = notifications.friendRequests;
+  const friendRequests = userData.notifications.friendRequests;
 
   const handleModalOpen = () => {
     setIsOpen(true);
@@ -54,7 +51,7 @@ export const Header = () => {
 
     fetchData(url, "POST", body).then((response) => {
       if (response.status === 200) {
-        alert("Friend request confirmed successfully");
+        window.location.reload();
       } else {
         alert("Failed to confirm friend request");
       }
@@ -98,13 +95,16 @@ export const Header = () => {
       </div>
 
       {isOpen() && (
-        <Modal handleModalClose={handleModalClose} title="Friend Requests">
+        <Modal
+          handleModalClose={handleModalClose}
+          title={friendRequests.length ? "Friend Requests" : ""}
+        >
           {friendRequests.length && (
             <div>
               {friendRequests.map((item: User) => (
                 <FriendRequests
-                  userId={item.id}
-                  userName={item.userName}
+                  friendId={item.userId}
+                  friendName={item.userName}
                   onConfirmClick={confirmFriendRequest}
                 />
               ))}

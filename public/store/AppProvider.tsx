@@ -1,12 +1,14 @@
 import { createSignal, createContext, useContext } from "solid-js";
-import { CustomWindow } from "../types";
+import { CustomWindow, User } from "../types";
+import { decodeHtmlAndParse } from "../utils/helpers";
 
 export interface Appcontext {
-  notifications: { friendRequests: string };
-  userFriends: string;
   userId: string;
   userName: string;
-  registeredUsersList: string;
+  notifications: { friendRequests: Array<User> };
+  userFriends: Array<User>;
+  registeredUsersList: Array<User>;
+  sentFriendRequests: Array<User>;
 }
 
 const AppContext = createContext<Appcontext | undefined>(undefined);
@@ -14,12 +16,27 @@ const AppContext = createContext<Appcontext | undefined>(undefined);
 export function AppProvider(props: any) {
   const customWindow = window as unknown as CustomWindow;
 
+  const notifications = decodeHtmlAndParse(
+    customWindow.userData.notifications as unknown as string
+  );
+
+  const registeredUsersList = decodeHtmlAndParse(
+    customWindow.userData.registeredUsersList
+  );
+
+  const userFriends = decodeHtmlAndParse(customWindow.userData.userFriends);
+
+  const sentFriendRequests = decodeHtmlAndParse(
+    customWindow.userData.sentFriendRequests
+  );
+
   const [userData] = createSignal<Appcontext>({
     userName: customWindow.userData.userName,
     userId: customWindow.userData.userId,
-    notifications: customWindow.userData.notifications,
-    userFriends: customWindow.userData.userFriends,
-    registeredUsersList: customWindow.userData.registeredUsersList,
+    notifications,
+    userFriends,
+    registeredUsersList,
+    sentFriendRequests,
   });
 
   return (

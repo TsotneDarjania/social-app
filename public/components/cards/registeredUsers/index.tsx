@@ -3,12 +3,17 @@ import style from "./style.module.css";
 type RegisteredUsersProps = {
   userName: string;
   id: string;
-  onAddFriendClick: (id: string) => void;
+  disabled: boolean;
+  onAddFriendClick: (
+    potentialFriendId: string,
+    potentialFriendName: string
+  ) => void;
 };
 
 const RegisteredUsers = ({
   userName,
   id,
+  disabled,
   onAddFriendClick,
 }: RegisteredUsersProps) => {
   return (
@@ -16,8 +21,11 @@ const RegisteredUsers = ({
       <p>{userName}</p>
 
       <button
-        class={style.addFriendButton}
-        onClick={() => onAddFriendClick(id)}
+        disabled={disabled}
+        class={`${style.addFriendButton} ${
+          disabled ? style.addFriendButtonDisabled : ""
+        }`}
+        onClick={() => onAddFriendClick(id, userName)}
       >
         Add Friend
       </button>

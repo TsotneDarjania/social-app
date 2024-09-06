@@ -14,7 +14,7 @@ pageRouter.get("/", async (req, res) => {
   const users = await User.find({ userName: { $ne: user?.userName } });
   const registeredUsersList = users.map((item) => ({
     userName: item.userName,
-    id: item._id,
+    userId: item._id,
   }));
 
   const friendRequestsStr = user?.friendRequests;
@@ -22,6 +22,9 @@ pageRouter.get("/", async (req, res) => {
 
   const userFriendsStr = user?.friends;
   const userFriends = parseDataFromDb(userFriendsStr);
+
+  const sentFriendRequestsStr = user?.sentFriendRequests;
+  const sentFriendRequests = parseDataFromDb(sentFriendRequestsStr);
 
   const notifications = {
     friendRequests,
@@ -38,6 +41,7 @@ pageRouter.get("/", async (req, res) => {
     notifications,
     logOutImage,
     registeredUsersList,
+    sentFriendRequests,
   });
 });
 

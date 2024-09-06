@@ -7,6 +7,7 @@ export interface IUser extends Document {
   password: string;
   friends: string[];
   friendRequests: string[];
+  sentFriendRequests: string[];
 }
 
 // Create the User schema
@@ -16,6 +17,7 @@ const userSchema: Schema<IUser> = new Schema({
   password: { type: String, required: true },
   friends: { type: [String], default: [] },
   friendRequests: { type: [String], default: [] },
+  sentFriendRequests: { type: [String], default: [] },
 });
 
 // Create the User model

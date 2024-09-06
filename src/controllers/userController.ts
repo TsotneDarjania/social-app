@@ -71,19 +71,31 @@ export const logOut = (req: Request, res: Response) => {
   });
 };
 
-export const sendFriendRequest = (req: Request, res: Response) => {
-  const { userName, userId, friendId } = req.body;
+export const sendFriendRequest = async (req: Request, res: Response) => {
+  const { userId, userName, potentialFriendId, potentialFriendName } = req.body;
 
-  User.updateOne(
-    { _id: friendId },
-    { $push: { friendRequests: JSON.stringify({ userId, userName }) } }
-  )
-    .then(() => {
-      res.json("success");
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Internal server error" });
-    });
+  try {
+    await User.updateOne(
+      { _id: potentialFriendId },
+      { $push: { friendRequests: JSON.stringify({ userId, userName }) } }
+    );
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          sentFriendRequests: JSON.stringify({
+            userId: potentialFriendId,
+            userName: potentialFriendName,
+          }),
+        },
+      }
+    );
+
+    res.json("success");
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error", error: err });
+  }
 };
 
 export const confirmFriendRequest = async (req: Request, res: Response) => {
