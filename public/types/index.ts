@@ -5,13 +5,26 @@ export interface CustomWindow extends Window {
 }
 
 type UserData = {
-  username: string;
+  userName: string;
   userId: string;
-  notifications: number;
-  friendRequests: string[];
-  userFriends: string[];
+  notifications: string;
+  friendRequests: string;
+  userFriends: string;
+  registeredUsersList: string;
+  sentFriendRequests: string;
 };
 
 type AppData = {
   logOutImage: string;
 };
+
+export interface Notifications {
+  friendRequests: Array<User>;
+}
+
+export type User = {
+  userId: string;
+  userName: string;
+};
+
+export type FormName = "login" | "registration";

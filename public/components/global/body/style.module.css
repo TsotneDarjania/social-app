@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  padding: 20px 50px;
+  overflow: hidden;
+}
+
+.usersListContainer {
+  background-color: #8197bf;
+  border-radius: 6px;
+  height: calc(100vh - 12rem);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+}
+
+.friendsContainer {
+  background-color: #8197bf;
+  border-radius: 6px;
+  height: calc(100vh - 12rem);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+}
+
+.friendsCard {
+  all: unset;
+  border: 1px solid rgb(225, 224, 224);
+  border-radius: 8px;
+  background-color: #e0eefd;
+  width: 16rem;
+  padding: 10px 10px;
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
+}

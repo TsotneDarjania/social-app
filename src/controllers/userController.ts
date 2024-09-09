@@ -14,7 +14,7 @@ export const registration = async (req: Request, res: Response) => {
     return;
   }
 
-  const { username, email, password } = req.body;
+  const { userName, email, password } = req.body;
 
   if (await User.findOne({ email })) {
     return res.status(400).json({ message: "User already exists" });
@@ -22,7 +22,7 @@ export const registration = async (req: Request, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = new User({ username, email, password: hashedPassword });
+  const user = new User({ userName, email, password: hashedPassword });
   user.save();
 
   res.status(201).json({ res: "User registered" });
@@ -71,19 +71,31 @@ export const logOut = (req: Request, res: Response) => {
   });
 };
 
-export const sendFriendRequest = (req: Request, res: Response) => {
-  const { userName, userId, friendId } = req.body;
+export const sendFriendRequest = async (req: Request, res: Response) => {
+  const { userId, userName, potentialFriendId, potentialFriendName } = req.body;
 
-  User.updateOne(
-    { _id: friendId },
-    { $push: { friendRequests: JSON.stringify({ userId, userName }) } }
-  )
-    .then(() => {
-      res.json("success");
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Internal server error" });
-    });
+  try {
+    await User.updateOne(
+      { _id: potentialFriendId },
+      { $push: { friendRequests: JSON.stringify({ userId, userName }) } }
+    );
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          sentFriendRequests: JSON.stringify({
+            userId: potentialFriendId,
+            userName: potentialFriendName,
+          }),
+        },
+      }
+    );
+
+    res.json("success");
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error", error: err });
+  }
 };
 
 export const confirmFriendRequest = async (req: Request, res: Response) => {

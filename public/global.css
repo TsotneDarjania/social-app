@@ -4,5 +4,24 @@
   box-sizing: border-box;
 }
 
-body {
+.root {
+  display: flex;
+  background-color: #f4f4f4;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  flex: 1;
+}
+
+.unAuthorized {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
