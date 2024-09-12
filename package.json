@@ -42,6 +42,8 @@
     "express-session": "^1.18.0",
     "express-validator": "^7.1.0",
     "mongoose": "^8.5.2",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "solid-js": "^1.8.21"
   }
 }

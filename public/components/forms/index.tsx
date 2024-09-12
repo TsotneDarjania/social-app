@@ -13,9 +13,7 @@ const Forms = () => {
   return (
     <>
       {form() === "login" && <LoginForm onCreateAccountPress={handleSetForm} />}
-      {form() === "registration" && (
-        <RegistrationForm onClose={handleSetForm} />
-      )}
+      {form() === "registration" && <RegistrationForm />}
     </>
   );
 };

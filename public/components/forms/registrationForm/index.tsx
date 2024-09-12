@@ -4,10 +4,6 @@ import { fetchData, registrationValidation } from "../../../utils/helpers";
 import { baseUrl } from "../../../utils/constants";
 import { createSignal } from "solid-js";
 
-type RegistrationFormProps = {
-  onClose: (formName: FormName) => void;
-};
-
 const RegistrationForm = () => {
   const [formData, setFormData] = createSignal({
     email: "",

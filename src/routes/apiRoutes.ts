@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   confirmFriendRequest,
+  deleteUser,
   login,
   logOut,
   registration,
@@ -24,5 +25,8 @@ apiRoutes.post("/api/user/logout", logOut);
 apiRoutes.post("/api/user/send-friend-request", sendFriendRequest);
 //Confirm Friend Request
 apiRoutes.post("/api/user/confirm-friend-request", confirmFriendRequest);
+
+// Delete User
+apiRoutes.delete("/api/user/delete", deleteUser);
 
 export default apiRoutes;

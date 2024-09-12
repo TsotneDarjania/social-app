@@ -12,11 +12,6 @@ export default {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-      {
         test: /\.(ts|tsx)$/, // Test for .ts and .tsx files
         use: "babel-loader", // Use Babel to handle TypeScript and JSX
         exclude: /node_modules/, // Exclude the node_modules folder

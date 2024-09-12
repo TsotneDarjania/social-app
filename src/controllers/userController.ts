@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 
 import { CustomSession } from "../types/session";
 import User from "../models/user";
+import session from "express-session";
 
 export const registration = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -143,4 +144,21 @@ export const isAuthenticated = (req: Request) => {
     return true;
   }
   return false;
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const session = req.session as unknown as CustomSession;
+  if (session?.userId) {
+    await User.deleteOne({ _id: session.userId });
+
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Internal server error" });
+      }
+      res.clearCookie("sid");
+      res.json("success");
+    });
+    return;
+  }
+  return res.status(500).json({ message: "Internal server error" });
 };

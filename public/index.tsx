@@ -6,8 +6,11 @@ import Body from "./components/global/body";
 import { createSignal } from "solid-js";
 import { CustomWindow } from "./types";
 import Forms from "./components/forms";
+import { io } from "socket.io-client";
 
 const App = () => {
+  const socket = io("http://localhost:3000");
+
   const [isAuthenticated, setIsAuthenticated] = createSignal(false);
   const customWindow = window as unknown as CustomWindow;
 

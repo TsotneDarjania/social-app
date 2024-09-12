@@ -4,10 +4,14 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import { Server } from "socket.io";
+import { createServer } from "http";
 
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer);
 
 // Config Tamplate Engine
 app.set("view engine", "ejs");
@@ -42,8 +46,10 @@ app.use(
 const PORT = process.env.PORT || 3001;
 
 const Config = {
-  PORT: PORT,
+  PORT: PORT as number,
   expressApp: app,
+  io,
+  httpServer,
 };
 
 export default Config;

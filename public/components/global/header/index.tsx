@@ -6,21 +6,21 @@ import { fetchData } from "../../../utils/helpers";
 import Modal from "../../modal";
 import style from "./style.module.css";
 import FriendRequests from "../../cards/friendRequests";
+import { deleteUser } from "../../../api/user";
 
 export const Header = () => {
-  const [isOpen, setIsOpen] = createSignal(false);
+  const [modalState, setModalState] = createSignal({
+    isOpenSettings: false,
+    isOpenNotifications: false,
+  });
 
   const customWindow = window as unknown as CustomWindow;
   const userData: Appcontext = useApp();
 
   const friendRequests = userData.notifications.friendRequests;
 
-  const handleModalOpen = () => {
-    setIsOpen(true);
-  };
-
   const handleModalClose = () => {
-    setIsOpen(false);
+    setModalState({ isOpenNotifications: false, isOpenSettings: false });
   };
 
   const logOut = async () => {
@@ -70,7 +70,15 @@ export const Header = () => {
         <a href="#">Story</a>
 
         <div class={style.notificationWrapper}>
-          <button class={style.notificationBtn} onClick={handleModalOpen}>
+          <button
+            class={style.notificationBtn}
+            onClick={() =>
+              setModalState({
+                ...modalState(),
+                isOpenNotifications: !modalState().isOpenNotifications,
+              })
+            }
+          >
             Notifications
           </button>
 
@@ -84,7 +92,20 @@ export const Header = () => {
       </div>
 
       <div class={style.userProfile}>
-        <div class={style.userName}> {userData?.userName}</div>
+        <div
+          onClick={() => {
+            setModalState({ ...modalState(), isOpenSettings: true });
+          }}
+          class={style.userName}
+        >
+          {" "}
+          {userData?.userName}
+        </div>
+        {modalState().isOpenSettings && (
+          <Modal handleModalClose={handleModalClose} title="Settings">
+            <button onClick={deleteUser}>Delete Account</button>
+          </Modal>
+        )}
 
         <img
           class={style.logOutIcon}
@@ -94,7 +115,8 @@ export const Header = () => {
         ></img>
       </div>
 
-      {isOpen() && (
+      {/* Notification Modal */}
+      {modalState().isOpenNotifications && (
         <Modal
           handleModalClose={handleModalClose}
           title={friendRequests.length ? "Friend Requests" : ""}
