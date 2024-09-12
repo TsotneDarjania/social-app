@@ -7,7 +7,7 @@
 }
 
 .usersListContainer {
-  background-color: #8197bf;
+  background-color: #a4afc4;
   border-radius: 6px;
   height: calc(100vh - 12rem);
   padding: 10px;
@@ -15,10 +15,11 @@
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
+  width: 300px;
 }
 
 .friendsContainer {
-  background-color: #8197bf;
+  background-color: #a4afc4;
   border-radius: 6px;
   height: calc(100vh - 12rem);
   padding: 10px;
@@ -26,6 +27,7 @@
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
+  width: 300px;
 }
 
 .friendsCard {
@@ -39,3 +41,5 @@
   font-weight: bold;
   font-size: 18px;
 }
+
+

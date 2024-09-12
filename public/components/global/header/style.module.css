@@ -70,6 +70,12 @@
 .userName {
   font-size: 20px;
   font-weight: bold;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.userName:hover{
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .logOutIcon {
