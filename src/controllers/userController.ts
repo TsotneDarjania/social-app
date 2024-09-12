@@ -25,6 +25,9 @@ export const registration = async (req: Request, res: Response) => {
   const user = new User({ userName, email, password: hashedPassword });
   user.save();
 
+  const session = req.session as unknown as CustomSession;
+  session.userId = user._id!.toString();
+
   res.status(201).json({ res: "User registered" });
 };
 

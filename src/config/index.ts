@@ -27,7 +27,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-      mongoUrl: process.env.MONGODB_URI!,
+      mongoUrl: process.env.MONGODB_GIORGI!,
       collectionName: "social-app-sessions",
     }),
     cookie: {

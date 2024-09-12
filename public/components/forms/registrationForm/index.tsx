@@ -8,7 +8,7 @@ type RegistrationFormProps = {
   onClose: (formName: FormName) => void;
 };
 
-const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
+const RegistrationForm = () => {
   const [formData, setFormData] = createSignal({
     email: "",
     password: "",
@@ -39,16 +39,21 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
     });
 
     fetchData(url, "POST", body)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 400) {
+          alert("User with this email already exists");
+        }
+        return response.json();
+      })
       .then((data) => {
         if (data.errors) {
           const errorMessage = data.errors[0];
           alert(errorMessage);
         }
+        window.location.reload();
 
         console.log(data);
-      })
-      .then(() => onClose("login"));
+      });
   };
 
   return (
@@ -56,11 +61,7 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
       <div class={style.signUpHeader}>
         <h2>Sign Up</h2>
 
-        <button
-          type="button"
-          class={style.closeBtn}
-          onClick={() => onClose("login")}
-        >
+        <button type="button" class={style.closeBtn}>
           X
         </button>
       </div>
