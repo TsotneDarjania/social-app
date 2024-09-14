@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 import { CustomSession } from "../types/session";
 import User from "../models/user";
-import session from "express-session";
+import { connectedUsers } from "../config/socket";
 
 export const registration = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -95,6 +95,11 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
         },
       }
     );
+
+    const socket = connectedUsers.get(potentialFriendId);
+    if (socket) {
+      socket.emit("friendRequest", { userId, userName });
+    }
 
     res.json("success");
   } catch (err) {

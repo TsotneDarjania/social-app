@@ -10,9 +10,7 @@ pageRouter.get("/", async (req, res) => {
   const session = req.session as any as CustomSession;
 
   const user = await User.findOne({ _id: session.userId });
-  // console.log(user);
   let users = await User.find({ _id: { $ne: session.userId } });
-  // console.log("users =>", users);
   const registeredUsersList = users.map((item) => ({
     userName: item.userName,
     userId: item._id,

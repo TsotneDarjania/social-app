@@ -7,6 +7,7 @@ import Modal from "../../modal";
 import style from "./style.module.css";
 import FriendRequests from "../../cards/friendRequests";
 import { deleteUser } from "../../../api/user";
+import { useNotifications } from "../../../store/NotificationContext";
 
 export const Header = () => {
   const [modalState, setModalState] = createSignal({
@@ -16,8 +17,7 @@ export const Header = () => {
 
   const customWindow = window as unknown as CustomWindow;
   const userData: Appcontext = useApp();
-
-  const friendRequests = userData.notifications.friendRequests;
+  const { friendRequests } = useNotifications();
 
   const handleModalClose = () => {
     setModalState({ isOpenNotifications: false, isOpenSettings: false });
@@ -83,10 +83,12 @@ export const Header = () => {
           </button>
 
           <div
-            style={`display: ${friendRequests.length > 0 ? "inline" : "none"}`}
+            style={`display: ${
+              friendRequests().length > 0 ? "inline" : "none"
+            }`}
             class={style.notificationNumber}
           >
-            {friendRequests.length}
+            {friendRequests().length}
           </div>
         </div>
       </div>
@@ -119,11 +121,11 @@ export const Header = () => {
       {modalState().isOpenNotifications && (
         <Modal
           handleModalClose={handleModalClose}
-          title={friendRequests.length ? "Friend Requests" : ""}
+          title={friendRequests().length ? "Friend Requests" : ""}
         >
-          {friendRequests.length && (
+          {friendRequests().length && (
             <div>
-              {friendRequests.map((item: User) => (
+              {friendRequests().map((item: User) => (
                 <FriendRequests
                   friendId={item.userId}
                   friendName={item.userName}

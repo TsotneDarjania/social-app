@@ -2,12 +2,7 @@ import apiRoutes from "./routes/apiRoutes";
 import Config from "./config";
 import pageRouter from "./routes/pageRouter";
 import db from "./mongoDB/config";
-
-const io = Config.io;
-
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
+import "./config/socket";
 
 // Connect to MongoDB
 db.once("connected", () => {

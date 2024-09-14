@@ -8,7 +8,7 @@ import style from "./style.module.css";
 const Body = () => {
   const customWindow = window as unknown as CustomWindow;
   const userData: Appcontext = useApp();
-  console.log(userData);
+
   const { registeredUsersList, userFriends, sentFriendRequests } = userData;
   const sentRequestsIDs = sentFriendRequests.map((item) => item.userId);
   const userFriendsIDs = userFriends.map((item) => item.userId);

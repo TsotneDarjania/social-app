@@ -19,6 +19,7 @@
   border: 1px solid #888;
   height: 40%;
   width: 30%;
+  overflow-y: scroll;
 }
 
 .header {
