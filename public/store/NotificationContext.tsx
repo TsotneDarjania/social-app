@@ -5,6 +5,8 @@ import { decodeHtmlAndParse } from "../utils/helpers";
 interface NotificationsContextType {
   friendRequests: Accessor<User[]>;
   setFriendRequests: (requests: User[]) => void;
+  connectedUsers: Accessor<User[]>;
+  setConnectedUsers: (item: User[]) => void;
 }
 
 const NotificationsContext = createContext<
@@ -21,11 +23,17 @@ export const NotificationsProvider = (props: any) => {
   const [friendRequests, setFriendRequests] = createSignal<User[]>(
     notifications.friendRequests
   );
+  const [connectedUsers, setConnectedUsers] = createSignal<User[]>([]);
+
+  const value = {
+    friendRequests,
+    setFriendRequests,
+    connectedUsers,
+    setConnectedUsers,
+  };
 
   return (
-    <NotificationsContext.Provider
-      value={{ friendRequests, setFriendRequests }}
-    >
+    <NotificationsContext.Provider value={value}>
       {props.children}
     </NotificationsContext.Provider>
   );
