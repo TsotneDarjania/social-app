@@ -1,4 +1,5 @@
 import { Appcontext, useApp } from "../../../store/AppProvider";
+import { useNotifications } from "../../../store/NotificationContext";
 import { CustomWindow, User } from "../../../types";
 import { baseUrl } from "../../../utils/constants";
 import { fetchData } from "../../../utils/helpers";
@@ -8,8 +9,9 @@ import style from "./style.module.css";
 const Body = () => {
   const customWindow = window as unknown as CustomWindow;
   const userData: Appcontext = useApp();
-  console.log(userData);
-  const { registeredUsersList, userFriends, sentFriendRequests } = userData;
+
+  const { userFriends, sentFriendRequests } = userData;
+  const { connectedUsers } = useNotifications();
   const sentRequestsIDs = sentFriendRequests.map((item) => item.userId);
   const userFriendsIDs = userFriends.map((item) => item.userId);
 
@@ -37,10 +39,10 @@ const Body = () => {
   return (
     <div class={style.container}>
       <div class={style.usersWrapper}>
-        <h3>Users</h3>
+        <h3>Connected Users</h3>
 
         <ul class={style.usersListContainer}>
-          {registeredUsersList.map((item: User) => {
+          {connectedUsers()?.map((item: User) => {
             const isDisabled =
               sentRequestsIDs.includes(item.userId) ||
               userFriendsIDs.includes(item.userId);

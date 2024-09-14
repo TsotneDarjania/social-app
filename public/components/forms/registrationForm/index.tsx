@@ -1,5 +1,4 @@
 import style from "./style.module.css";
-import { FormName } from "../../../types";
 import { fetchData, registrationValidation } from "../../../utils/helpers";
 import { baseUrl } from "../../../utils/constants";
 import { createSignal } from "solid-js";
