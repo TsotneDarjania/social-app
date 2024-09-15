@@ -29,6 +29,13 @@ export const registration = async (req: Request, res: Response) => {
   const session = req.session as unknown as CustomSession;
   session.userId = user._id!.toString();
 
+  connectedUsers.forEach((socket) => {
+    socket.emit("newUserRegistered", {
+      userId: user._id!.toString(),
+      userName: user.userName,
+    });
+  });
+
   res.status(201).json({ res: "User registered" });
 };
 

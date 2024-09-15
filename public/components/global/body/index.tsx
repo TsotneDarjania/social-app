@@ -3,7 +3,7 @@ import { useNotifications } from "../../../store/NotificationContext";
 import { CustomWindow, User } from "../../../types";
 import { baseUrl } from "../../../utils/constants";
 import { fetchData } from "../../../utils/helpers";
-import RegisteredUsers from "../../cards/registeredUsers";
+import RegisteredUser from "../../cards/registeredUser";
 import style from "./style.module.css";
 
 const Body = () => {
@@ -11,7 +11,7 @@ const Body = () => {
   const userData: Appcontext = useApp();
 
   const { userFriends, sentFriendRequests } = userData;
-  const { connectedUsers } = useNotifications();
+  const { connectedUsers, registeredUsersList } = useNotifications();
   const sentRequestsIDs = sentFriendRequests.map((item) => item.userId);
   const userFriendsIDs = userFriends.map((item) => item.userId);
 
@@ -39,16 +39,37 @@ const Body = () => {
   return (
     <div class={style.container}>
       <div class={style.usersWrapper}>
-        <h3>Connected Users</h3>
+        <h3>Users</h3>
 
         <ul class={style.usersListContainer}>
-          {connectedUsers()?.map((item: User) => {
+          {registeredUsersList().map((item: User) => {
             const isDisabled =
               sentRequestsIDs.includes(item.userId) ||
               userFriendsIDs.includes(item.userId);
 
             return (
-              <RegisteredUsers
+              <RegisteredUser
+                id={item.userId}
+                userName={item.userName}
+                disabled={isDisabled}
+                onAddFriendClick={sendFriendRequest}
+              />
+            );
+          })}
+        </ul>
+      </div>
+
+      <div class={style.usersWrapper}>
+        <h3>Connected Users</h3>
+
+        <ul class={style.usersListContainer}>
+          {connectedUsers().map((item: User) => {
+            const isDisabled =
+              sentRequestsIDs.includes(item.userId) ||
+              userFriendsIDs.includes(item.userId);
+
+            return (
+              <RegisteredUser
                 id={item.userId}
                 userName={item.userName}
                 disabled={isDisabled}

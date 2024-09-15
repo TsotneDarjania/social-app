@@ -10,8 +10,9 @@ const useSocket = () => {
   const {
     friendRequests,
     setFriendRequests,
-    connectedUsers,
     setConnectedUsers,
+    setRegisteredUsersList,
+    registeredUsersList,
   } = useNotifications();
   const socket = io("http://localhost:3000", { autoConnect: false });
 
@@ -19,20 +20,27 @@ const useSocket = () => {
     if (userId) {
       socket.connect();
 
+      socket.on("newUserRegistered", (newUser) => {
+        // console.log("New user registered:", newUser);
+        setRegisteredUsersList([...registeredUsersList(), newUser]);
+      });
+
       socket.on("connect", () => {
         socket.emit("newUserConnected", userId);
-        console.log("Connected with userId:", userId);
+        // console.log("Connected with userId:", userId);
       });
 
       socket.on("friendRequest", (newFriendRequest) => {
-        console.log("New friend request received:", newFriendRequest);
+        // console.log("New friend request received:", newFriendRequest);
         setFriendRequests([...friendRequests(), newFriendRequest]);
       });
 
       socket.on("updateConnectedUsers", (data) => {
-        console.log("Updated connected users:", data);
-
-        setConnectedUsers(data);
+        // console.log("Updated connected users:", data);
+        const withoutMyself = data.filter(
+          (item: User) => item.userId !== userId
+        );
+        setConnectedUsers(withoutMyself);
       });
 
       onCleanup(() => {

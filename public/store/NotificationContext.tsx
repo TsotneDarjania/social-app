@@ -7,6 +7,8 @@ interface NotificationsContextType {
   setFriendRequests: (requests: User[]) => void;
   connectedUsers: Accessor<User[]>;
   setConnectedUsers: (item: User[]) => void;
+  registeredUsersList: Accessor<User[]>;
+  setRegisteredUsersList: (item: User[]) => void;
 }
 
 const NotificationsContext = createContext<
@@ -20,16 +22,25 @@ export const NotificationsProvider = (props: any) => {
     customWindow.userData.notifications as unknown as string
   );
 
+  const registeredUsers = decodeHtmlAndParse(
+    customWindow.userData.registeredUsersList
+  );
+
   const [friendRequests, setFriendRequests] = createSignal<User[]>(
     notifications.friendRequests
   );
   const [connectedUsers, setConnectedUsers] = createSignal<User[]>([]);
+
+  const [registeredUsersList, setRegisteredUsersList] =
+    createSignal<User[]>(registeredUsers);
 
   const value = {
     friendRequests,
     setFriendRequests,
     connectedUsers,
     setConnectedUsers,
+    registeredUsersList,
+    setRegisteredUsersList,
   };
 
   return (
