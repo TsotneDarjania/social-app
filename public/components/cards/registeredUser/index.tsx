@@ -1,6 +1,6 @@
 import style from "./style.module.css";
 
-type RegisteredUsersProps = {
+type RegisteredUserProps = {
   userName: string;
   id: string;
   disabled: boolean;
@@ -10,12 +10,12 @@ type RegisteredUsersProps = {
   ) => void;
 };
 
-const RegisteredUsers = ({
+const RegisteredUser = ({
   userName,
   id,
   disabled,
   onAddFriendClick,
-}: RegisteredUsersProps) => {
+}: RegisteredUserProps) => {
   return (
     <li class={style.registeredUserCard}>
       <p>{userName}</p>
@@ -33,4 +33,4 @@ const RegisteredUsers = ({
   );
 };
 
-export default RegisteredUsers;
+export default RegisteredUser;

@@ -7,7 +7,6 @@ export interface Appcontext {
   userId: string;
   userName: string;
   userFriends: Array<User>;
-  registeredUsersList: Array<User>;
   sentFriendRequests: Array<User>;
 }
 
@@ -30,7 +29,6 @@ export const AppProvider = (props: any) => {
     userName: customWindow.userData.userName,
     userId: customWindow.userData.userId,
     userFriends,
-    registeredUsersList,
     sentFriendRequests,
   });
 

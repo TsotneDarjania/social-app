@@ -25,27 +25,39 @@ io.on("connection", (socket) => {
       })
     );
 
+    // console.log("newConnectedUsersData", newConnectedUsersData);
+
     io.emit("updateConnectedUsers", newConnectedUsersData);
   });
 
   socket.on("disconnect", async () => {
+    let disconnectedUserId;
+
     for (let [key, value] of connectedUsers.entries()) {
       if (value === socket) {
+        disconnectedUserId = key;
         connectedUsers.delete(key);
-
-        const connectedUserIds = Array.from(connectedUsers.keys());
-
-        const connectedUsersData = await User.find(
-          { _id: { $in: connectedUserIds } },
-          "userId userName"
-        ).lean();
-
-        io.emit("updateConnectedUsers", connectedUsersData);
         break;
       }
     }
 
-    console.log("User disconnected");
+    if (disconnectedUserId) {
+      const connectedUserIds = Array.from(connectedUsers.keys());
+
+      const connectedUsersData = await User.find(
+        { _id: { $in: connectedUserIds } },
+        "_id userName"
+      ).lean();
+
+      const newConnectedUsersData = connectedUsersData.map(
+        ({ _id, ...rest }) => ({
+          userId: _id,
+          ...rest,
+        })
+      );
+
+      io.emit("updateConnectedUsers", newConnectedUsersData);
+    }
   });
 });
 
