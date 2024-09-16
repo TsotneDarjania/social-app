@@ -1,3 +1,4 @@
+import { createEffect } from "solid-js";
 import { Appcontext, useApp } from "../../../store/AppProvider";
 import { useNotifications } from "../../../store/NotificationContext";
 import { CustomWindow, User } from "../../../types";
@@ -35,10 +36,6 @@ const Body = () => {
       }
     });
   };
-  console.log(connectedUsers());
-  
-  
-  
 
   return (
     <div class={style.container}>
@@ -51,21 +48,24 @@ const Body = () => {
               sentRequestsIDs.includes(item.userId) ||
               userFriendsIDs.includes(item.userId);
 
+            const isAcitve = connectedUsers()
+              .map((el) => el.userId)
+              .includes(item.userId);
+
             return (
               <RegisteredUser
                 id={item.userId}
                 userName={item.userName}
                 disabled={isDisabled}
                 onAddFriendClick={sendFriendRequest}
-                
+                isActive={isAcitve}
               />
             );
           })}
-          
         </ul>
       </div>
 
-       <div class={style.usersWrapper}>
+      {/* <div class={style.usersWrapper}>
         <h3>Connected Users</h3>
 
         <ul class={style.usersListContainer}>
@@ -74,17 +74,22 @@ const Body = () => {
               sentRequestsIDs.includes(item.userId) ||
               userFriendsIDs.includes(item.userId);
 
+            const isAcitve = connectedUsers()
+              .map((el) => el.userId)
+              .includes(item.userId);
+
             return (
               <RegisteredUser
                 id={item.userId}
                 userName={item.userName}
                 disabled={isDisabled}
                 onAddFriendClick={sendFriendRequest}
+                isActive={isAcitve}
               />
             );
           })}
         </ul>
-      </div> 
+      </div> */}
 
       <div class={style.friendsWrapper}>
         <h3>Friends</h3>
