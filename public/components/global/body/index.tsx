@@ -35,6 +35,10 @@ const Body = () => {
       }
     });
   };
+  console.log(connectedUsers());
+  
+  
+  
 
   return (
     <div class={style.container}>
@@ -53,13 +57,15 @@ const Body = () => {
                 userName={item.userName}
                 disabled={isDisabled}
                 onAddFriendClick={sendFriendRequest}
+                
               />
             );
           })}
+          
         </ul>
       </div>
 
-      <div class={style.usersWrapper}>
+       <div class={style.usersWrapper}>
         <h3>Connected Users</h3>
 
         <ul class={style.usersListContainer}>
@@ -78,7 +84,7 @@ const Body = () => {
             );
           })}
         </ul>
-      </div>
+      </div> 
 
       <div class={style.friendsWrapper}>
         <h3>Friends</h3>

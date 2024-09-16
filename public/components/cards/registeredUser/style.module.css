@@ -36,3 +36,13 @@
   color: #a9a9a9;
   cursor: not-allowed;
 }
+.indicator{
+  width:10px;
+  height:10px;
+  border-radius: 2.5px;
+}
+.menu{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
