@@ -14,7 +14,10 @@ const useSocket = () => {
     setRegisteredUsersList,
     registeredUsersList,
   } = useNotifications();
-  const socket = io("http://localhost:3000", { autoConnect: false });
+  const socket = io("http://localhost:3000", {
+    autoConnect: false,
+    query: { userId },
+  });
 
   createEffect(() => {
     if (userId) {
@@ -25,10 +28,10 @@ const useSocket = () => {
         setRegisteredUsersList([...registeredUsersList(), newUser]);
       });
 
-      socket.on("connect", () => {
-        socket.emit("newUserConnected", userId);
-        // console.log("Connected with userId:", userId);
-      });
+      // socket.on("connect", () => {
+      //   socket.emit("newUserConnected", userId);
+      //   // console.log("Connected with userId:", userId);
+      // });
 
       socket.on("friendRequest", (newFriendRequest) => {
         // console.log("New friend request received:", newFriendRequest);

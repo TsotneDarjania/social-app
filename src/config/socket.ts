@@ -5,30 +5,28 @@ const connectedUsers: Map<string, any> = new Map();
 
 const io = Config.io;
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("User connected");
 
-  socket.on("newUserConnected", async (userId) => {
-    connectedUsers.set(userId, socket);
+  const userId = socket.handshake.query.userId as string;
+  connectedUsers.set(userId, socket);
 
-    const connectedUserIds = Array.from(connectedUsers.keys());
+  const connectedUserIds = Array.from(connectedUsers.keys());
 
-    const connectedUsersData = await User.find(
-      { _id: { $in: connectedUserIds } },
-      "_id userName"
-    ).lean();
+  const connectedUsersData = await User.find(
+    { _id: { $in: connectedUserIds } },
+    "_id userName"
+  ).lean();
 
-    const newConnectedUsersData = connectedUsersData.map(
-      ({ _id, ...rest }) => ({
-        userId: _id,
-        ...rest,
-      })
-    );
+  //renaming _id key to userId for consistancy
+  const newConnectedUsersData = connectedUsersData.map(({ _id, ...rest }) => ({
+    userId: _id,
+    ...rest,
+  }));
 
-    // console.log("newConnectedUsersData", newConnectedUsersData);
+  // console.log("newConnectedUsersData", newConnectedUsersData);
 
-    io.emit("updateConnectedUsers", newConnectedUsersData);
-  });
+  io.emit("updateConnectedUsers", newConnectedUsersData);
 
   socket.on("disconnect", async () => {
     let disconnectedUserId;
