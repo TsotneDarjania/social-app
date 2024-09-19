@@ -1,4 +1,5 @@
 import Config from ".";
+import { SocketEnums } from "../../enums/socketEnums";
 import User from "../models/user";
 
 const connectedUsers: Map<string, any> = new Map();
@@ -26,7 +27,7 @@ io.on("connection", async (socket) => {
 
   // console.log("newConnectedUsersData", newConnectedUsersData);
 
-  io.emit("updateConnectedUsers", newConnectedUsersData);
+  io.emit(SocketEnums.updateConnectedUsers, newConnectedUsersData);
 
   socket.on("disconnect", async () => {
     let disconnectedUserId;
@@ -54,7 +55,7 @@ io.on("connection", async (socket) => {
         })
       );
 
-      io.emit("updateConnectedUsers", newConnectedUsersData);
+      io.emit(SocketEnums.updateConnectedUsers, newConnectedUsersData);
     }
   });
 });

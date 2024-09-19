@@ -16,6 +16,7 @@ type UserData = {
 
 type AppData = {
   logOutImage: string;
+  messageicon: string;
 };
 
 export interface Notifications {

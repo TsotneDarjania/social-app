@@ -48,17 +48,21 @@ const Body = () => {
               sentRequestsIDs.includes(item.userId) ||
               userFriendsIDs.includes(item.userId);
 
-            const isAcitve = connectedUsers()
+            const isActive = connectedUsers()
               .map((el) => el.userId)
               .includes(item.userId);
 
-            return (
+            const isFriend = userFriends
+              .map((el) => el.userId)
+              .includes(item.userId);
+
+            return isFriend ? null : (
               <RegisteredUser
                 id={item.userId}
                 userName={item.userName}
                 disabled={isDisabled}
                 onAddFriendClick={sendFriendRequest}
-                isActive={isAcitve}
+                isActive={isActive}
               />
             );
           })}
@@ -95,11 +99,27 @@ const Body = () => {
         <h3>Friends</h3>
 
         <div class={style.friendsContainer}>
-          {userFriends.map((item: User) => (
-            <li class={style.friendsCard}>
-              <p>{item.userName}</p>
-            </li>
-          ))}
+          {userFriends.map((item: User) => {
+            const isActive = connectedUsers()
+              .map((el) => el.userId)
+              .includes(item.userId);
+            return (
+              <li class={style.friendsCard}>
+                <p>{item.userName}</p>
+                <div class={style.messageAndActive}>
+                  <img
+                    class={style.messageIcon}
+                    alt="message"
+                    src={customWindow?.appData?.messageicon}
+                  ></img>
+                  <div
+                    style={{ "background-color": isActive ? "green" : "grey" }}
+                    class={style.indicator}
+                  ></div>
+                </div>
+              </li>
+            );
+          })}
         </div>
       </div>
     </div>

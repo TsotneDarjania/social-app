@@ -2,6 +2,7 @@ import { createEffect, onCleanup } from "solid-js";
 import { io } from "socket.io-client";
 import { useNotifications } from "../store/NotificationContext";
 import { CustomWindow, User } from "../types";
+import { SocketEnums } from "../../enums/socketEnums";
 
 const useSocket = () => {
   const customWindow = window as unknown as CustomWindow;
@@ -23,23 +24,15 @@ const useSocket = () => {
     if (userId) {
       socket.connect();
 
-      socket.on("newUserRegistered", (newUser) => {
-        // console.log("New user registered:", newUser);
+      socket.on(SocketEnums.newUserRegistered, (newUser) => {
         setRegisteredUsersList([...registeredUsersList(), newUser]);
       });
 
-      // socket.on("connect", () => {
-      //   socket.emit("newUserConnected", userId);
-      //   // console.log("Connected with userId:", userId);
-      // });
-
-      socket.on("friendRequest", (newFriendRequest) => {
-        // console.log("New friend request received:", newFriendRequest);
+      socket.on(SocketEnums.FriendRequest, (newFriendRequest) => {
         setFriendRequests([...friendRequests(), newFriendRequest]);
       });
 
-      socket.on("updateConnectedUsers", (data) => {
-        // console.log("Updated connected users:", data);
+      socket.on(SocketEnums.updateConnectedUsers, (data) => {
         const withoutMyself = data.filter(
           (item: User) => item.userId !== userId
         );
