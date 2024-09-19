@@ -6,6 +6,7 @@ import {
   logOut,
   registration,
   sendFriendRequest,
+  getChat
 } from "../controllers/userController";
 import {
   userLoginValidation,
@@ -28,5 +29,10 @@ apiRoutes.post("/api/user/confirm-friend-request", confirmFriendRequest);
 
 // Delete User
 apiRoutes.delete("/api/user/delete", deleteUser);
+
+
+//get chat
+apiRoutes.post("/api/user/getchat", getChat)
+
 
 export default apiRoutes;

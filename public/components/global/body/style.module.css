@@ -28,6 +28,9 @@
   gap: 10px;
   overflow-y: scroll;
   width: 300px;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
 }
 
 .friendsCard {
@@ -35,11 +38,30 @@
   border: 1px solid rgb(225, 224, 224);
   border-radius: 8px;
   background-color: #e0eefd;
-  width: 16rem;
+  width: 230px;
   padding: 10px 10px;
   color: #000000;
   font-weight: bold;
   font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+.indicator{
+  width:10px;
+  height:10px;
+  border-radius: 2.5px;
+}
+
+.messageIcon{
+  height: 30px
+}
+.messageAndActive{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+}
+
 
 

@@ -31,7 +31,7 @@ pageRouter.get("/", async (req, res) => {
 
   // Server side image to base64
   const logOutImage = await imageToBase64("public/assets/logOutIcon.png");
-
+  const messageIcon = await imageToBase64("public/assets/message.png");
   res.render("index", {
     authenticated: isAuthenticated(req),
     userName: user?.userName,
@@ -39,6 +39,7 @@ pageRouter.get("/", async (req, res) => {
     userFriends,
     notifications,
     logOutImage,
+    messageIcon,
     registeredUsersList,
     sentFriendRequests,
   });
