@@ -25,7 +25,6 @@ io.on("connection", async (socket) => {
     ...rest,
   }));
 
-  // console.log("newConnectedUsersData", newConnectedUsersData);
 
   io.emit(SocketEnums.updateConnectedUsers, newConnectedUsersData);
 

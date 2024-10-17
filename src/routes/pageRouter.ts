@@ -21,7 +21,8 @@ pageRouter.get("/", async (req, res) => {
 
   const userFriendsStr = user?.friends;
   const userFriends = parseDataFromDb(userFriendsStr);
-
+  
+  
   const sentFriendRequestsStr = user?.sentFriendRequests;
   const sentFriendRequests = parseDataFromDb(sentFriendRequestsStr);
 
@@ -32,6 +33,8 @@ pageRouter.get("/", async (req, res) => {
   // Server side image to base64
   const logOutImage = await imageToBase64("public/assets/logOutIcon.png");
   const messageIcon = await imageToBase64("public/assets/message.png");
+  console.log(userFriends);
+  
   res.render("index", {
     authenticated: isAuthenticated(req),
     userName: user?.userName,
@@ -44,5 +47,6 @@ pageRouter.get("/", async (req, res) => {
     sentFriendRequests,
   });
 });
+
 
 export default pageRouter;

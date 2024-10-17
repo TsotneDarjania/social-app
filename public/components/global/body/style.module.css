@@ -62,6 +62,21 @@
   gap: 4px;
 
 }
+.messageButton{
+  background-color: rgb(111, 154, 197);   
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+  padding-left: 1.5px;
+  padding-right: 1.5px;
+
+}
+.messageButton:active {
+  transform: scale(0.95);  
+  background-color: rgb(84, 138, 191);  
+}
+
 
 
 
