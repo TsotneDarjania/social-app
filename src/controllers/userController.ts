@@ -115,35 +115,48 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 };
 
 export const confirmFriendRequest = async (req: Request, res: Response) => {
-  const { userName, userId, friendId, friendName } = req.body;
+  const { toUserName, toUserId, fromFriendId, fromFriendName } = req.body;
 
   try {
     await User.updateOne(
-      { _id: friendId },
-      { $push: { friends: JSON.stringify({ userId, userName }) } }
+      { _id: fromFriendId },
+      { $push: { friends: JSON.stringify({ userId:toUserId, userName:toUserName }) } }
     );
 
     await User.updateOne(
-      { _id: userId },
+      { _id: toUserId },
       {
         $push: {
-          friends: JSON.stringify({ userId: friendId, userName: friendName }),
+          friends: JSON.stringify({ userId: fromFriendId, userName: fromFriendName }),
         },
       }
     );
-
+    
     await User.updateOne(
-      { _id: userId },
+      { _id: toUserId },
       {
         $pull: {
-          friendRequests: JSON.stringify({
-            userId: friendId,
-            userName: friendName,
+          sentFriendRequests: JSON.stringify({
+            userId: fromFriendId,
+            userName: fromFriendName,
           }),
         },
       }
     );
 
+    await User.updateOne(
+      { _id: fromFriendId },
+      {
+        $pull: {
+          friendRequests: JSON.stringify({
+            userId: toUserId,
+            userName: toUserName,
+          }),
+        },
+      }
+    );
+    
+    
     res.json("success");
   } catch (err) {
     res.status(500).json({ message: "Internal server error", error: err });

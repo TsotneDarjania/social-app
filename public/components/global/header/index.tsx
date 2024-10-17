@@ -39,18 +39,21 @@ export const Header = () => {
         }
       });
   };
-
+  let isAlreadyConfirm = false
   const confirmFriendRequest = (friendId: string, friendName: string) => {
     const url = `${baseUrl}/api/user/confirm-friend-request`;
     const body = JSON.stringify({
-      userName: customWindow.userData.userName,
-      userId: customWindow.userData.userId,
-      friendId,
-      friendName,
+      fromFriendName: customWindow.userData.userName,
+      fromFriendId: customWindow.userData.userId,
+      toUserId:friendId,
+      toUserName:friendName,
     });
-
+    if(isAlreadyConfirm) return
+    
+    isAlreadyConfirm = true
     fetchData(url, "POST", body).then((response) => {
       if (response.status === 200) {
+        isAlreadyConfirm = false
         window.location.reload();
       } else {
         alert("Failed to confirm friend request");

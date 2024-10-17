@@ -25,7 +25,9 @@ export interface Notifications {
 
 export type User = {
   userId: string;
+  toUserName: string;
   userName: string;
+  toUserId:string;
 };
 
 export type FormName = "login" | "registration";
