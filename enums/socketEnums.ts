@@ -1,7 +1,8 @@
 export enum SocketEnums {
     updateConnectedUsers = "updateConnectedUse",
     newUserRegistered = "newUserRegistered",
-    FriendRequest = "friendRequest"
+    FriendRequest = "friendRequest",
+    acceptFriendRequest = "acceptFriendRequest"
 }
 
 
