@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { CustomSession } from "../types/session";
 import User from "../models/user";
 import { connectedUsers } from "../config/socket";
+import { SocketEnums } from "../../enums/socketEnums";
 
 export const registration = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -105,7 +106,7 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 
     const socket = connectedUsers.get(potentialFriendId);
     if (socket) {
-      socket.emit("friendRequest", { userId, userName });
+      socket.emit(SocketEnums.FriendRequest, { userId, userName });
     }
 
     res.json("success");
@@ -155,7 +156,11 @@ export const confirmFriendRequest = async (req: Request, res: Response) => {
         },
       }
     );
-    
+
+    const socket = connectedUsers.get(toUserId);
+    if (socket) {
+      socket.emit(SocketEnums.acceptFriendRequest, { toUserId, toUserName });
+    }
     
     res.json("success");
   } catch (err) {
