@@ -121,18 +121,25 @@ export const confirmFriendRequest = async (req: Request, res: Response) => {
   try {
     await User.updateOne(
       { _id: fromFriendId },
-      { $push: { friends: JSON.stringify({ userId:toUserId, userName:toUserName }) } }
+      {
+        $push: {
+          friends: JSON.stringify({ userId: toUserId, userName: toUserName }),
+        },
+      }
     );
 
     await User.updateOne(
       { _id: toUserId },
       {
         $push: {
-          friends: JSON.stringify({ userId: fromFriendId, userName: fromFriendName }),
+          friends: JSON.stringify({
+            userId: fromFriendId,
+            userName: fromFriendName,
+          }),
         },
       }
     );
-    
+
     await User.updateOne(
       { _id: toUserId },
       {
@@ -157,11 +164,30 @@ export const confirmFriendRequest = async (req: Request, res: Response) => {
       }
     );
 
-    const socket = connectedUsers.get(toUserId);
-    if (socket) {
-      socket.emit(SocketEnums.acceptFriendRequest, { toUserId, toUserName });
+    await User.updateOne(
+      { _id: fromFriendId },
+      {
+        $pull: {
+          friendRequests: JSON.stringify({
+            userId: fromFriendId,
+            userName: fromFriendName,
+          }),
+        },
+      }
+    );
+
+    const toSocket = connectedUsers.get(toUserId);
+    const fromSocket = connectedUsers.get(fromFriendId);
+    if (toSocket) {
+      toSocket.emit(SocketEnums.acceptFriendRequest, { toUserId, toUserName });
     }
-    
+    if (fromSocket) {
+      fromSocket.emit(SocketEnums.acceptFriendRequest, {
+        toUserId,
+        toUserName,
+      });
+    }
+
     res.json("success");
   } catch (err) {
     res.status(500).json({ message: "Internal server error", error: err });
@@ -193,6 +219,4 @@ export const deleteUser = async (req: Request, res: Response) => {
   return res.status(500).json({ message: "Internal server error" });
 };
 
-export const getChat = (req: Request, res: Response)=> {
-   
-}
+export const getChat = (req: Request, res: Response) => {};

@@ -38,10 +38,10 @@ const useSocket = () => {
         );
         setConnectedUsers(withoutMyself);
       });
-      
-      socket.on(SocketEnums.acceptFriendRequest,()=>{
-        window.location.reload()
-      })
+
+      socket.on(SocketEnums.acceptFriendRequest, () => {
+        window.location.reload();
+      });
 
       onCleanup(() => {
         socket.disconnect();

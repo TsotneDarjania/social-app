@@ -14,13 +14,10 @@ const Body = () => {
   const userData: Appcontext = useApp();
 
   const { userFriends, sentFriendRequests } = userData;
-  
-  
+
   const { connectedUsers, registeredUsersList } = useNotifications();
   const sentRequestsIDs = sentFriendRequests.map((item) => item.userId);
   const userFriendsIDs = userFriends.map((item) => item.userId);
-
-  
 
   const sendFriendRequest = (
     potentialFriendId: string,
@@ -49,23 +46,19 @@ const Body = () => {
         <h3>Users</h3>
 
         <ul class={style.usersListContainer}>
-          
           {registeredUsersList().map((item: User) => {
-            
-            
+            console.log(registeredUsersList());
             const isDisabled =
               sentRequestsIDs.includes(item.userId) ||
               userFriendsIDs.includes(item.userId);
 
             const isActive = connectedUsers()
-              .map((el) => el.toUserId)
-              .includes(item.toUserId);
-            
-            
-            
+              .map((el) => el.userId)
+              .includes(item.userId);
+
             const isFriend = userFriends
-              .map((el) => el.toUserId)
-              .includes(item.toUserId);
+              .map((el) => el.userId)
+              .includes(item.userId);
 
             return isFriend ? null : (
               <RegisteredUser
@@ -80,65 +73,39 @@ const Body = () => {
         </ul>
       </div>
 
-      {/* <div class={style.usersWrapper}>
-        <h3>Connected Users</h3>
-
-        <ul class={style.usersListContainer}>
-          {connectedUsers().map((item: User) => {
-            const isDisabled =
-              sentRequestsIDs.includes(item.userId) ||
-              userFriendsIDs.includes(item.userId);
-
-            const isAcitve = connectedUsers()
-              .map((el) => el.userId)
-              .includes(item.userId);
-
-            return (
-              <RegisteredUser
-                id={item.userId}
-                userName={item.userName}
-                disabled={isDisabled}
-                onAddFriendClick={sendFriendRequest}
-                isActive={isAcitve}
-              />
-            );
-          })}
-        </ul>
-      </div> */}
-
       <div class={style.friendsWrapper}>
         <h3>Friends</h3>
 
         <div class={style.friendsContainer}>
           {userFriends.map((item: User) => {
-            
-            
-            
-            
             const isActive = connectedUsers()
               .map((el) => el.userId)
               .includes(item.userId);
-              const [isModalOpen, setModalOpen] = createSignal(false);
-              const handleModalClose = () => setModalOpen(false);
-              
+
+            const [isModalOpen, setModalOpen] = createSignal(false);
+            const handleModalClose = () => setModalOpen(false);
+
             return (
               <li class={style.friendsCard}>
                 <p>{item.userName}</p>
                 <div class={style.messageAndActive}>
-                  <button class={style.messageButton} onClick={() => setModalOpen(true)}>
-                  <img
-                    class={style.messageIcon}
-                    alt="message"
-                    src={customWindow?.appData?.messageicon}
-                  ></img>
+                  <button
+                    class={style.messageButton}
+                    onClick={() => setModalOpen(true)}
+                  >
+                    <img
+                      class={style.messageIcon}
+                      alt="message"
+                      src={customWindow?.appData?.messageicon}
+                    ></img>
                   </button>
                   {isModalOpen() && (
-                 <Modal
-                 handleModalClose={handleModalClose}
-                  title={`Messaging ${item.toUserName}`}
-                 >
-                  <p>messages</p>
-                 </Modal>
+                    <Modal
+                      handleModalClose={handleModalClose}
+                      title={`Messaging ${item.toUserName}`}
+                    >
+                      <p>messages</p>
+                    </Modal>
                   )}
                   <div
                     style={{ "background-color": isActive ? "green" : "grey" }}
