@@ -1,4 +1,3 @@
-import { createEffect } from "solid-js";
 import { Appcontext, useApp } from "../../../store/AppProvider";
 import { useNotifications } from "../../../store/NotificationContext";
 import { CustomWindow, User } from "../../../types";
@@ -8,6 +7,7 @@ import RegisteredUser from "../../cards/registeredUser";
 import style from "./style.module.css";
 import Modal from "../../modal";
 import { createSignal } from "solid-js";
+import { getMessages, sendMessage } from "../../../api/user";
 
 const Body = () => {
   const customWindow = window as unknown as CustomWindow;
@@ -18,6 +18,40 @@ const Body = () => {
   const { connectedUsers, registeredUsersList } = useNotifications();
   const sentRequestsIDs = sentFriendRequests.map((item) => item.userId);
   const userFriendsIDs = userFriends.map((item) => item.userId);
+
+  const [messageValue, setMessageValue] = createSignal("");
+
+  const [messages, setMessages] = createSignal<
+    [
+      {
+        message: string;
+        recipient: {
+          userId: string;
+          userName: string;
+        };
+        sender: {
+          userId: string;
+          userName: string;
+        };
+      }
+    ]
+  >([
+    {
+      message: "",
+      recipient: {
+        userId: "",
+        userName: "",
+      },
+      sender: {
+        userId: "",
+        userName: "",
+      },
+    },
+  ]);
+
+  function getChatMessages(senderId: string, recipientId: string) {
+    getMessages(senderId, recipientId).then((res) => setMessages(res));
+  }
 
   const sendFriendRequest = (
     potentialFriendId: string,
@@ -47,7 +81,6 @@ const Body = () => {
 
         <ul class={style.usersListContainer}>
           {registeredUsersList().map((item: User) => {
-            console.log(registeredUsersList());
             const isDisabled =
               sentRequestsIDs.includes(item.userId) ||
               userFriendsIDs.includes(item.userId);
@@ -91,7 +124,10 @@ const Body = () => {
                 <div class={style.messageAndActive}>
                   <button
                     class={style.messageButton}
-                    onClick={() => setModalOpen(true)}
+                    onClick={() => {
+                      getChatMessages(userData.userId, item.userId);
+                      setModalOpen(true);
+                    }}
                   >
                     <img
                       class={style.messageIcon}
@@ -102,9 +138,40 @@ const Body = () => {
                   {isModalOpen() && (
                     <Modal
                       handleModalClose={handleModalClose}
-                      title={`Messaging ${item.toUserName}`}
+                      title={`${item.userName}`}
                     >
-                      <p>messages</p>
+                      <p></p>
+                      {messages().map((messageData) => {
+                        return (
+                          <div>
+                            <p> {messageData.sender.userName}</p>
+
+                            <p>{messageData.message}</p>
+                          </div>
+                        );
+                      })}
+
+                      <textarea
+                        onInput={(element) => {
+                          setMessageValue(element.target.value);
+                        }}
+                        class={style.textArea}
+                        maxLength={600}
+                      ></textarea>
+                      <button
+                        onclick={() => {
+                          sendMessage(
+                            userData.userId,
+                            userData.userName,
+                            item.userId,
+                            item.userName,
+                            messageValue()
+                          );
+                        }}
+                        class={style.sendButton}
+                      >
+                        Send Message
+                      </button>
                     </Modal>
                   )}
                   <div

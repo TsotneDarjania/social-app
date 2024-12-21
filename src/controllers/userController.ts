@@ -6,6 +6,7 @@ import { CustomSession } from "../types/session";
 import User from "../models/user";
 import { connectedUsers } from "../config/socket";
 import { SocketEnums } from "../../enums/socketEnums";
+import { Message } from "../models/messages";
 
 export const registration = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -156,7 +157,7 @@ export const confirmFriendRequest = async (req: Request, res: Response) => {
       { _id: fromFriendId },
       {
         $pull: {
-          friendRequests: JSON.stringify({
+          sentFriendRequests: JSON.stringify({
             userId: toUserId,
             userName: toUserName,
           }),
@@ -169,6 +170,18 @@ export const confirmFriendRequest = async (req: Request, res: Response) => {
       {
         $pull: {
           friendRequests: JSON.stringify({
+            userId: toUserId,
+            userName: toUserName,
+          }),
+        },
+      }
+    );
+
+    await User.updateOne(
+      { _id: toUserId },
+      {
+        $pull: {
+          friendRequests: JSON.stringify({
             userId: fromFriendId,
             userName: fromFriendName,
           }),
@@ -178,6 +191,7 @@ export const confirmFriendRequest = async (req: Request, res: Response) => {
 
     const toSocket = connectedUsers.get(toUserId);
     const fromSocket = connectedUsers.get(fromFriendId);
+
     if (toSocket) {
       toSocket.emit(SocketEnums.acceptFriendRequest, { toUserId, toUserName });
     }
@@ -219,4 +233,49 @@ export const deleteUser = async (req: Request, res: Response) => {
   return res.status(500).json({ message: "Internal server error" });
 };
 
-export const getChat = (req: Request, res: Response) => {};
+export const getChat = async (req: Request, res: Response) => {
+  const { senderUserId, recipientUserId } = req.body;
+
+  // const messageModel = new Message({
+  //   sender: {
+  //     userId: senderUserId,
+  //     userName: "",
+  //   },
+  //   recipient: {
+  //     userId: recipientUserId,
+  //     userName: "",
+  //   },
+  //   message : "",
+  // });
+
+  const messageData = await Message.find({
+    "sender.userId": senderUserId,
+    "recipient.userId": recipientUserId,
+  });
+
+  res.json(messageData);
+};
+
+export const sendMessage = (req: Request, res: Response) => {
+  const { fromUserId, fromUserName, toUserId, toUserName, message } = req.body;
+
+  const messageModel = new Message({
+    sender: {
+      userId: fromUserId,
+      userName: fromUserName,
+    },
+    recipient: {
+      userId: toUserId,
+      userName: toUserName,
+    },
+    message,
+  });
+
+  messageModel.save();
+
+  res.json([
+    {
+      status: "success",
+    },
+  ]);
+};

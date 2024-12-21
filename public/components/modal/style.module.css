@@ -14,11 +14,11 @@
   flex-direction: column;
   background-color: #fefefe;
   border-radius: 6px;
-  margin: 15% auto;
+  margin: 10% auto;
   padding: 0 20px;
   border: 1px solid #888;
-  height: 40%;
-  width: 30%;
+  height: 60%;
+  width: 35%;
   overflow-y: scroll;
 }
 
